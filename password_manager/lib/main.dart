@@ -3,10 +3,10 @@ import 'package:password_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:password_manager/view.dart';
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 class MyApp extends StatefulWidget {
@@ -19,16 +19,13 @@ class MyApp extends StatefulWidget {
 class _SignInScreenState extends State<MyApp> {
 @override
 Widget build(BuildContext context){
-  return Scaffold(
-    body: Container(decoration: BoxDecoration(gradient: LinearGradient(colors:
-    [hexStringToColor("CB2B93"),
-    hexStringToColor("9546C4"),
-    hexStringToColor("5E61F4")
-    ],
-    begin: Alignment.topCenter, end: Alignment.bottomCenter
-    ))
-    ),);
-    
+  return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const ViewScreenState(title: 'Flutter Demo Home Page'),
+    );
   
 }
 }
