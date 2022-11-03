@@ -1,34 +1,92 @@
-import 'dart:html';
-import 'package:password_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+void main() {
   runApp(const MyApp());
 }
-class MyApp extends StatefulWidget {
+
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _SignInScreenState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MyHomePage(title: 'サービス一覧'),
+    );
+  }
 }
 
-class _SignInScreenState extends State<MyApp> {
-@override
-Widget build(BuildContext context){
-  return Scaffold(
-    body: Container(decoration: BoxDecoration(gradient: LinearGradient(colors:
-    [hexStringToColor("CB2B93"),
-    hexStringToColor("9546C4"),
-    hexStringToColor("5E61F4")
-    ],
-    begin: Alignment.topCenter, end: Alignment.bottomCenter
-    ))
-    ),);
-    
-  
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
 }
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            Container(
+              height: 100,
+              width: MediaQuery.of(context).size.width * 1,
+              color: Colors.yellow,
+              margin: EdgeInsets.only(top: 10),
+              child: Row(
+                children: [
+                  Container(
+                    child: const Text('GitHub'),
+                  ),
+                  Container(
+                    child: IconButton(
+                      icon: Icon(Icons.android),
+                      onPressed: _incrementCounter,
+                    ),
+                  )
+                ],
+                )
+            ),
+            Container(
+              height: 100,
+              width: MediaQuery.of(context).size.width * 1,
+              color: Colors.blue,
+              margin: EdgeInsets.only(top: 10),
+            ),
+            Container(
+              height: 100,
+              width: MediaQuery.of(context).size.width * 1,
+              color: Colors.yellow,
+              margin: EdgeInsets.only(top: 10),
+            ),
+          ]
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ), 
+    );
+  }
 }
