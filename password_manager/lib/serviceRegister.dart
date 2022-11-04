@@ -17,26 +17,25 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('サービス登録'),
+        title: const Text('サービス登録'),
       ),
       body: Center(
         child: Column(
           children: [
-            Container(
-              alignment: Alignment.center,
-              height: 100,
-              width: MediaQuery.of(context).size.width * 1,
-              margin: EdgeInsets.only(top: 10),
-              color: Colors.grey.withOpacity(0.1),
+           Container(
+              alignment: Alignment.centerLeft,
               child: const Text(
-                'サービス名 :',
+                "サービス名：",
                 style: TextStyle(
-                  fontSize: 30,
+                fontWeight: FontWeight.bold,
+                  fontSize: 24,
                 ),
               ),
             ),
             Container(
-              width: MediaQuery.of(context).size.width * 0.3,
+              width: double.infinity,
+              height: 50,
+              alignment: Alignment.center,
               child: DropdownButton(
                 items: const [
                   DropdownMenuItem(
@@ -62,49 +61,83 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
                   fontSize: 30,
                 ),
               ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(width: 1, color: Colors.blue)
+              ),
             ),
             Container(
-              alignment: Alignment.center,
-              height: 100,
-              width: MediaQuery.of(context).size.width * 1,
-              margin: EdgeInsets.only(top: 10),
-              color: Colors.grey.withOpacity(0.1),
+              width: double.infinity,
+              height: 80,
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
               child: const Text(
-                'メールアドレス :',
+                "メールアドレス：",
                 style: TextStyle(
-                  fontSize: 30,
+                fontWeight: FontWeight.bold,
+                  fontSize: 24,
                 ),
               ),
             ),
             Container(
-              width: MediaQuery.of(context).size.width * 0.8,
+              width: double.infinity,
+              height: 50,
+              alignment: Alignment.center,
               child: TextField(
                 decoration: InputDecoration(
                   hintText: 'Enter your Email address',
                 ),
                 onChanged: ((Text) => email),
               ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(width: 1, color: Colors.blue)
+              ),
             ),
             Container(
-              alignment: Alignment.center,
-              height: 100,
-              width: MediaQuery.of(context).size.width * 1,
-              margin: EdgeInsets.only(top: 10),
-              color: Colors.grey.withOpacity(0.1),
+              width: double.infinity,
+              height: 80,
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
               child: const Text(
-                'パスワード :',
+                "パスワード：",
                 style: TextStyle(
-                  fontSize: 30,
+                fontWeight: FontWeight.bold,
+                  fontSize: 24,
                 ),
               ),
             ),
             Container(
-              width: MediaQuery.of(context).size.width * 0.8,
+              width: double.infinity,
+              height: 50,
+              margin: EdgeInsets.only(bottom: 30),
+              alignment: Alignment.center,
               child: TextField(
                 decoration: InputDecoration(
                   hintText: 'Enter your password',
                 ),
                 onChanged: (Text) => password,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(width: 1, color: Colors.blue)
+              ),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.15,
+              height: 50,
+              child: ElevatedButton(
+                child: const Text('登録'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blue,
+                  onPrimary: Colors.white,
+                  elevation: 15,
+                ),
+                onPressed: (() {
+                  email = 'Jin';
+                })
               ),
             ),
           ],
