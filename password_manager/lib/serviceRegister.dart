@@ -10,6 +10,8 @@ class ServiceRegisterScreen extends StatefulWidget {
 
 class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
   String? isSelectedItem;
+  String? email;
+  String? password;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,7 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
               alignment: Alignment.center,
               height: 100,
               width: MediaQuery.of(context).size.width * 1,
+              margin: EdgeInsets.only(top: 10),
               color: Colors.grey.withOpacity(0.1),
               child: const Text(
                 'サービス名 :',
@@ -58,6 +61,50 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
                 style: const TextStyle(
                   fontSize: 30,
                 ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              height: 100,
+              width: MediaQuery.of(context).size.width * 1,
+              margin: EdgeInsets.only(top: 10),
+              color: Colors.grey.withOpacity(0.1),
+              child: const Text(
+                'メールアドレス :',
+                style: TextStyle(
+                  fontSize: 30,
+                ),
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Enter your Email address',
+                ),
+                onChanged: ((Text) => email),
+              ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              height: 100,
+              width: MediaQuery.of(context).size.width * 1,
+              margin: EdgeInsets.only(top: 10),
+              color: Colors.grey.withOpacity(0.1),
+              child: const Text(
+                'パスワード :',
+                style: TextStyle(
+                  fontSize: 30,
+                ),
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Enter your password',
+                ),
+                onChanged: (Text) => password,
               ),
             ),
           ],
