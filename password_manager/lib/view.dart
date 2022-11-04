@@ -109,9 +109,16 @@ class _ViewScreenStateState extends State<ViewScreenState> {
             ),
           ],
       
-      )
+      ),
 
-      
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => ))
+        },
+        child: const Text("Edit"),
+      ),
     );
   }
 }
