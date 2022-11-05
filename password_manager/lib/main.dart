@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:password_manager/edit.dart';
 import 'package:password_manager/serviceRegister.dart';
 import 'package:password_manager/view.dart';
 import 'list.dart';
