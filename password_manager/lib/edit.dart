@@ -96,6 +96,22 @@ class _EditScreenState extends State<EditScreen> {
                 border: Border.all(width: 1, color: Colors.blue)
               ),
             ),
+
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.15,
+              height: 50,
+              child: ElevatedButton(
+                child: const Text('確定'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blue,
+                  onPrimary: Colors.white,
+                  elevation: 15,
+                ),
+                onPressed: (() {
+                  
+                })
+              ),
+            ),
         ],
       ),
     );
