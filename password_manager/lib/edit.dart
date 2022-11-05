@@ -8,8 +8,8 @@ class EditScreen extends StatefulWidget {
 
 class _EditScreenState extends State<EditScreen> {
   String? isSelectedItem;
-  String? email;
-  String? password;
+  String? email = "sss";
+  String? password = "qwerty";
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +52,7 @@ class _EditScreenState extends State<EditScreen> {
 
           Container(
             child: TextField(
+              controller: TextEditingController(text: email),
                decoration: const InputDecoration(
                   hintText: 'Enter your Email address',
                 ),
@@ -86,6 +87,7 @@ class _EditScreenState extends State<EditScreen> {
               margin: EdgeInsets.only(bottom: 30),
               alignment: Alignment.center,
               child: TextField(
+                controller: TextEditingController(text: password),
                 decoration: const InputDecoration(
                   hintText: 'Enter your password',
                 ),

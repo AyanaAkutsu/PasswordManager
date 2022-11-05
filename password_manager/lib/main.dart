@@ -24,6 +24,5 @@ class MyApp extends StatelessWidget {
       //home:  const ViewScreenState(title: 'Flutter Demo Home Page'),
       home: const UserListScreen(),
     );
-
   }
 }
