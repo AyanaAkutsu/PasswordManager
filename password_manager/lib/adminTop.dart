@@ -3,8 +3,7 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 
 class AdminScreen extends StatefulWidget {
-  const AdminScreen({Key? key}) : super(key: key);
-
+  const AdminScreen({Key? key, required String title}) : super(key: key);
   @override
   State<AdminScreen> createState() => _AdminScreenState();
 }
@@ -16,12 +15,18 @@ class _AdminScreenState extends State<AdminScreen> {
     'サービス一覧',
   ];
 
+  List destination = [
+    '/userList',
+    '/adminTop', //サインアップ画面が完成したらここをサインアップ画面にする
+    '/list',
+  ];
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('管理者用トップ画面'),
+        title: const Text('Admin Top'),
       ),
       body: Center(
         child: Container(
@@ -46,7 +51,7 @@ class _AdminScreenState extends State<AdminScreen> {
                     elevation: 15,
                   ),
                   onPressed: (() {
-                    
+                    Navigator.pushNamed(context, destination[index]);
                   })
                 ),
               );

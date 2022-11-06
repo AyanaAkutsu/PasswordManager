@@ -3,8 +3,7 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 
 class UserListScreen extends StatefulWidget {
-  const UserListScreen({Key? key}) : super(key: key);
-
+  const UserListScreen({Key? key, required String title}) : super(key: key);
   @override
   State<UserListScreen> createState() => _UserListScreenState();
 }
@@ -36,7 +35,7 @@ class _UserListScreenState extends State<UserListScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('ユーザー一覧'),
+        title: const Text('User List'),
       ),
       body: Center(
         child: ListView.builder(
@@ -65,7 +64,9 @@ class _UserListScreenState extends State<UserListScreen> {
                   width: 10,
                   child: IconButton(
                     icon: Icon(Icons.arrow_forward_ios),
-                    onPressed: _incrementCounter,
+                    onPressed: (() {
+                      Navigator.pushNamed(context, '/list');
+                    })
                   ),
                 ),
               ],
@@ -73,11 +74,6 @@ class _UserListScreenState extends State<UserListScreen> {
           );
           },
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ), 
     );
   }

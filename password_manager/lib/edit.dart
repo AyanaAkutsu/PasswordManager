@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class EditScreen extends StatefulWidget {
-  const EditScreen({Key? key,  required String title}) : super(key: key);
+  const EditScreen({Key? key, required String title}) : super(key: key);
   @override
   State<EditScreen> createState() => _EditScreenState();
 }
@@ -110,7 +110,7 @@ class _EditScreenState extends State<EditScreen> {
                   elevation: 15,
                 ),
                 onPressed: (() {
-                  
+                  Navigator.pushNamed(context, '/list');
                 })
               ),
             ),

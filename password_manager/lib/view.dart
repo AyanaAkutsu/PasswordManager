@@ -113,9 +113,7 @@ class _ViewScreenStateState extends State<ViewScreenState> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => ))
+          Navigator.pushNamed(context, '/edit');
         },
         child: const Text("Edit"),
       ),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ListScreen extends StatefulWidget {
-  const ListScreen({Key? key}) : super(key: key);
-
+  const ListScreen({Key? key, required String title}) : super(key: key);
   @override
   State<ListScreen> createState() => _ListScreenState();
 }
@@ -21,21 +20,12 @@ class _ListScreenState extends State<ListScreen> {
     'F',
   ];
 
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('サービス一覧'),
+        title: const Text('Service List'),
       ),
       body: Center(
         child: Column (
@@ -71,7 +61,9 @@ class _ListScreenState extends State<ListScreen> {
                           width: MediaQuery.of(context).size.width * 0.6,
                           child: IconButton(
                             icon: const Icon(Icons.arrow_forward_ios),
-                            onPressed: _incrementCounter,
+                            onPressed: (() {
+                              Navigator.pushNamed(context, '/view');
+                            })
                           ),
                         ),
                       ],
@@ -92,7 +84,7 @@ class _ListScreenState extends State<ListScreen> {
                   elevation: 15,
                 ),
                 onPressed: (() {
-                  _counter = 0;
+                  Navigator.pushNamed(context, '/list');
                 })
               ),
             ),
@@ -100,8 +92,10 @@ class _ListScreenState extends State<ListScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: ((){
+          Navigator.pushNamed(context, '/serviceRegister');
+        }),
+        tooltip: 'サービスを追加',
         child: const Icon(Icons.add),
       ), 
     );
