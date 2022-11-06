@@ -4,6 +4,7 @@ import 'package:password_manager/serviceRegister.dart';
 import 'package:password_manager/view.dart';
 import 'list.dart';
 import 'userList.dart';
+import 'adminTop.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
       //home: const ServiceRegisterScreen(),
       //home: const ListScreen(),
       //home:  const ViewScreenState(title: 'Flutter Demo Home Page'),
-      home: const UserListScreen(),
+      //home: const UserListScreen(),
+      home: const AdminScreen(),
     );
   }
 }

@@ -8,6 +8,19 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
+
+  List service = [
+    'GitHub',
+    'Google',
+    'Microsoft',
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+  ];
+
   int _counter = 0;
 
   void _incrementCounter() {
@@ -22,100 +35,66 @@ class _ListScreenState extends State<ListScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('サービス一覧'),
+        title: const Text('サービス一覧'),
       ),
       body: Center(
-        child: Column(
+        child: Column (
           children: [
             Container(
-              height: 100,
               width: MediaQuery.of(context).size.width * 1,
-              color: Colors.grey.withOpacity(0.1),
-              margin: EdgeInsets.only(top: 10),
-              child: Row(
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
+              height: MediaQuery.of(context).size.height * 0.8,
+              margin: const EdgeInsets.only(top: 10, bottom: 10),
+              child: ListView.builder(
+                itemCount: service.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
                     height: 100,
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    child: const Text(
-                      'Google',
-                      style: TextStyle(
-                        fontSize: 30,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    height: 100,
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    child: IconButton(
-                      icon: Icon(Icons.arrow_forward_ios),
-                      onPressed: _incrementCounter,
-                    ),
-                  ),
-                ],
-              )
+                    width: MediaQuery.of(context).size.width * 1,
+                    color: Colors.grey.withOpacity(0.1),
+                    margin: const EdgeInsets.only(top: 10),
+                    child: Row(
+                      children: [
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          height: 100,
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: Text(
+                            service[index],
+                            style: const TextStyle(
+                              fontSize: 30,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.centerRight,
+                          height: 100,
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          child: IconButton(
+                            icon: const Icon(Icons.arrow_forward_ios),
+                            onPressed: _incrementCounter,
+                          ),
+                        ),
+                      ],
+                    )
+                  );
+                }
+              ),
             ),
-            Container(
-              height: 100,
-              width: MediaQuery.of(context).size.width * 1,
-              color: Colors.grey.withOpacity(0.1),
-              margin: EdgeInsets.only(top: 10),
-              child: Row(
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    height: 100,
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    child: const Text(
-                      'Microsoft',
-                      style: TextStyle(
-                        fontSize: 30,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    height: 100,
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    child: IconButton(
-                      icon: Icon(Icons.arrow_forward_ios),
-                      onPressed: _incrementCounter,
-                    ),
-                  ),
-                ],
-              )
-            ),
-            Container(
-              height: 100,
-              width: MediaQuery.of(context).size.width * 1,
-              color: Colors.grey.withOpacity(0.1),
-              margin: EdgeInsets.only(top: 10),
-              child: Row(
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    height: 100,
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    child: const Text(
-                      'GitHub',
-                      style: TextStyle(
-                        fontSize: 30,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    height: 100,
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    child: IconButton(
-                      icon: Icon(Icons.arrow_forward_ios),
-                      onPressed: _incrementCounter,
-                    ),
-                  ),
-                ],
-              )
+            //ここは管理者画面から来た場合のみ表示
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.3,
+              height: 50,
+              child: ElevatedButton(
+                child: const Text('ユーザー削除'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red.withOpacity(0.8),
+                  onPrimary: Colors.white,
+                  elevation: 15,
+                ),
+                onPressed: (() {
+                  _counter = 0;
+                })
+              ),
             ),
           ]
         ),
