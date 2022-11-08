@@ -17,6 +17,26 @@ class _EditScreenState extends State<EditScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Edit Screen"),
+
+        actions: [
+          ElevatedButton(
+            onPressed: () => {}, //ログイン画面に遷移する
+            child: const Text(
+              "ログアウト"
+            ),
+
+            style: ElevatedButton.styleFrom(
+              textStyle: TextStyle(
+                fontSize: 20,
+              ),
+              primary: Colors.lightBlue,
+              side: const BorderSide(
+                color: Colors.white,
+                width: 2
+              )
+            ),
+          )
+        ],
         
       ),
 
