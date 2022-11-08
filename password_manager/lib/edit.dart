@@ -26,6 +26,9 @@ class _EditScreenState extends State<EditScreen> {
             ),
 
             style: ElevatedButton.styleFrom(
+              textStyle: TextStyle(
+                fontSize: 20,
+              ),
               primary: Colors.lightBlue,
               side: const BorderSide(
                 color: Colors.white,

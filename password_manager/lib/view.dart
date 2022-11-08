@@ -14,6 +14,25 @@ class _ViewScreenStateState extends State<ViewScreenState> {
       appBar: AppBar(
         title: const Text("View Screen"),
         
+        actions: [
+          ElevatedButton(
+            onPressed: () => {}, //ログイン画面に遷移する
+            child: const Text(
+              "ログアウト"
+            ),
+
+            style: ElevatedButton.styleFrom(
+              textStyle: TextStyle(
+                fontSize: 20,
+              ),
+              primary: Colors.lightBlue,
+              side: const BorderSide(
+                color: Colors.white,
+                width: 2
+              )
+            ),
+          )
+        ],
       ),
       body: Column(children: [
             Container(
