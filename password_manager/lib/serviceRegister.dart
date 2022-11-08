@@ -3,7 +3,6 @@ import 'package:flutter/rendering.dart';
 
 class ServiceRegisterScreen extends StatefulWidget {
   const ServiceRegisterScreen({Key? key}) : super(key: key);
-
   @override
   State<ServiceRegisterScreen> createState() => _ServiceRegisterScreenState();
 }
@@ -136,7 +135,7 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
                   elevation: 15,
                 ),
                 onPressed: (() {
-                  email = 'Jin';
+                  Navigator.pushNamed(context, '/list');
                 })
               ),
             ),

@@ -4,6 +4,7 @@ import 'package:password_manager/serviceRegister.dart';
 import 'package:password_manager/view.dart';
 import 'list.dart';
 import 'userList.dart';
+import 'adminTop.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,10 +20,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      //home: const ServiceRegisterScreen(),
-      //home: const ListScreen(),
-      //home:  const ViewScreenState(title: 'Flutter Demo Home Page'),
-      home: const UserListScreen(),
+      initialRoute: '/',
+      routes: {
+        '/':(BuildContext context) => AdminScreen(title: 'Admin Top'),//ログイン画面が完成したらここをログイン画面にする 
+        '/edit': (BuildContext context) => EditScreen(title: 'Edit Screen'),
+        '/serviceRegister': (BuildContext context) => ServiceRegisterScreen(),
+        '/view': (BuildContext context) => ViewScreenState(title: 'View Screen'),
+        '/list':(BuildContext context) => ListScreen(title: 'Service List'),
+        '/userList':(BuildContext context) => UserListScreen(title: 'User List'),
+        '/adminTop':(BuildContext context) => AdminScreen(title: 'Admin Top')
+        //サインアップ画面を追加してください
+      },
     );
   }
 }
