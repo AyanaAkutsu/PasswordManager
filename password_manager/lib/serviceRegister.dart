@@ -11,9 +11,16 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
   String? isSelectedItem;
   String? email;
   String? password;
+   Object? args;
+  String? routeLocation;
 
   @override
   Widget build(BuildContext context) {
+    if (args == null) {
+      args = ModalRoute.of(context)?.settings.arguments;
+      routeLocation = args as String;
+    }
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('サービス登録'),
@@ -135,7 +142,7 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
                   elevation: 15,
                 ),
                 onPressed: (() {
-                  Navigator.pushNamed(context, '/list');
+                  Navigator.pushNamed(context, '/list', arguments: routeLocation as String);
                 })
               ),
             ),

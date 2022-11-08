@@ -10,9 +10,9 @@ class AdminScreen extends StatefulWidget {
 
 class _AdminScreenState extends State<AdminScreen> {
   List bottun = [
-    '社員一覧',
-    '社員登録',
-    'サービス一覧',
+    '(管理用)社員一覧',
+    '(管理用)社員登録',
+    '(自分用)サービス一覧',
   ];
 
   List destination = [
@@ -51,7 +51,7 @@ class _AdminScreenState extends State<AdminScreen> {
                     elevation: 15,
                   ),
                   onPressed: (() {
-                    Navigator.pushNamed(context, destination[index]);
+                    Navigator.of(context).pushNamed(destination[index], arguments: 'admin');
                   })
                 ),
               );
