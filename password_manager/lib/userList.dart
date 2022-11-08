@@ -21,7 +21,7 @@ class _UserListScreenState extends State<UserListScreen> {
     '浜崎　太郎',
   ];
 
-  
+
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class _UserListScreenState extends State<UserListScreen> {
                   child: IconButton(
                     icon: Icon(Icons.arrow_forward_ios),
                     onPressed: (() {
-                      Navigator.pushNamed(context, '/list');
+                      Navigator.pushNamed(context, '/list', arguments: 'userList');
                     })
                   ),
                 ),

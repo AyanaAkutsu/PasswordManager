@@ -1,12 +1,16 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 class ListScreen extends StatefulWidget {
-  const ListScreen({Key? key, required String title}) : super(key: key);
+  const ListScreen({Key? key, required String title,}) : super(key: key);
   @override
   State<ListScreen> createState() => _ListScreenState();
 }
 
 class _ListScreenState extends State<ListScreen> {
+  Object? args;
+  String? routeLocation;
 
   List service = [
     'GitHub',
@@ -22,6 +26,10 @@ class _ListScreenState extends State<ListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (args == null) {
+      args = ModalRoute.of(context)?.settings.arguments;
+      routeLocation = args as String;
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -93,27 +101,30 @@ class _ListScreenState extends State<ListScreen> {
               ),
             ),
             //ここは管理者画面から来た場合のみ表示
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.3,
-              height: 50,
-              child: ElevatedButton(
-                child: const Text('ユーザー削除'),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red.withOpacity(0.8),
-                  onPrimary: Colors.white,
-                  elevation: 15,
+            Visibility(
+              visible: routeLocation == 'userList',
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.3,
+                height: 50,
+                child: ElevatedButton(
+                  child: Text('ユーザー削除'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red.withOpacity(0.8),
+                    onPrimary: Colors.white,
+                    elevation: 15,
+                  ),
+                  onPressed: (() {
+                    //ここに確認画面へとぶ処理を記述
+                  })
                 ),
-                onPressed: (() {
-                  Navigator.pushNamed(context, '/list');
-                })
               ),
-            ),
+            )
           ]
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: ((){
-          Navigator.pushNamed(context, '/serviceRegister');
+          Navigator.pushNamed(context, '/serviceRegister',arguments: routeLocation as String);
         }),
         tooltip: 'サービスを追加',
         child: const Icon(Icons.add),
