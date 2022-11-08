@@ -21,12 +21,34 @@ class _UserListScreenState extends State<UserListScreen> {
     '浜崎　太郎',
   ];
 
+
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('User List'),
+
+        actions: [
+          ElevatedButton(
+            onPressed: () => {}, //ログイン画面に遷移する
+            child: const Text(
+              "ログアウト"
+            ),
+
+            style: ElevatedButton.styleFrom(
+              textStyle: TextStyle(
+                fontSize: 20,
+              ),
+              primary: Colors.lightBlue,
+              side: const BorderSide(
+                color: Colors.white,
+                width: 2
+              )
+            ),
+          )
+        ],
       ),
       body: Center(
         child: ListView.builder(

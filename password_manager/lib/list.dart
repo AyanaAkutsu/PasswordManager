@@ -34,6 +34,26 @@ class _ListScreenState extends State<ListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Service List'),
+
+        actions: [
+          ElevatedButton(
+            onPressed: () => {}, //ログイン画面に遷移する
+            child: const Text(
+              "ログアウト"
+            ),
+
+            style: ElevatedButton.styleFrom(
+              textStyle: TextStyle(
+                fontSize: 20,
+              ),
+              primary: Colors.lightBlue,
+              side: const BorderSide(
+                color: Colors.white,
+                width: 2
+              )
+            ),
+          )
+        ],
       ),
       body: Center(
         child: Column (
