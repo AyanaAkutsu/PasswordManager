@@ -1,6 +1,9 @@
 
+import 'dart:html';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'main.dart';
 
 class ViewScreenState extends StatefulWidget {
   const ViewScreenState({Key? key, required String title}) : super(key: key);
@@ -8,6 +11,22 @@ class ViewScreenState extends StatefulWidget {
   State<ViewScreenState> createState() => _ViewScreenStateState();
 }
 class _ViewScreenStateState extends State<ViewScreenState> {
+  String? selectedDocument; //前の画面でドキュメント名を取得することを考えています。未実装
+  String service = "";  //こうしないと、表示するときにエラーになります…
+  String email = "";
+  String password = "";
+
+  _getField() async {
+    //今は阿久津コレクションを指定していますが、実際は最初にコレクション名を取得します
+    final getDocument = await FirebaseFirestore.instance.collection('Ayana-Akutsu').doc('9BxcgzndZD5yoHw4qodv').get();
+    service = getDocument.get('service-name');
+    email = getDocument.get('email');
+    password = getDocument.get('password');
+    
+  }
+
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +54,8 @@ class _ViewScreenStateState extends State<ViewScreenState> {
         ],
       ),
       body: Column(children: [
+            
+
             Container(
               alignment: Alignment.centerLeft,
               child: const Text(
@@ -51,8 +72,8 @@ class _ViewScreenStateState extends State<ViewScreenState> {
               width: double.infinity,
               height: 50,
               alignment: Alignment.center,
-              child: const Text(
-                "example",
+              child: Text(
+                service,
                 style: TextStyle(
                   fontSize: 20
                 ),
@@ -83,8 +104,8 @@ class _ViewScreenStateState extends State<ViewScreenState> {
               width: double.infinity,
               height: 50,
               alignment: Alignment.center,
-              child: const Text(
-                "example@.com",
+              child: Text(
+                email,
                 style: TextStyle(
                   fontSize: 20
                 ),
@@ -115,8 +136,8 @@ class _ViewScreenStateState extends State<ViewScreenState> {
               width: double.infinity,
               height: 50,
               alignment: Alignment.center,
-              child: const Text(
-                "example@.com",
+              child: Text(
+                password,
                 style: TextStyle(
                   fontSize: 20
                 ),
