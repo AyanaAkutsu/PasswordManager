@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:password_manager/edit.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:password_manager/login.dart';
 import 'package:password_manager/serviceRegister.dart';
 import 'package:password_manager/view.dart';
@@ -8,7 +10,9 @@ import 'userList.dart';
 import 'adminTop.dart';
 import 'screens/signup.dart';
 
-void main() {
+
+void main() async{
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
