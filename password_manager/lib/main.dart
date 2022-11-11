@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:password_manager/edit.dart';
+import 'package:password_manager/login.dart';
 import 'package:password_manager/serviceRegister.dart';
 import 'package:password_manager/view.dart';
 import 'list.dart';
 import 'userList.dart';
 import 'adminTop.dart';
+import 'screens/signup.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,8 +30,8 @@ class MyApp extends StatelessWidget {
         '/view': (BuildContext context) => ViewScreenState(title: 'View Screen'),
         '/list':(BuildContext context) => ListScreen(title: 'Service List'),
         '/userList':(BuildContext context) => UserListScreen(title: 'User List'),
-        '/adminTop':(BuildContext context) => AdminScreen(title: 'Admin Top')
-        //サインアップ画面を追加してください
+        '/adminTop':(BuildContext context) => AdminScreen(title: 'Admin Top'),
+        '/signup' :(BuildContext context) => SignUpPage(),
       },
     );
   }

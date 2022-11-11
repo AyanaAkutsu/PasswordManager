@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:password_manager/screens/forgotpassword.dart';
 import 'package:password_manager/screens/signup.dart';
 
 
@@ -78,12 +79,16 @@ class Login extends State<MyStatefulWidget> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'パスワード',
+                  suffixIcon: Icon(Icons.visibility_off),
+                  suffixIconConstraints:
+                  BoxConstraints(maxHeight: 30, maxWidth: 30)
                 ),
               ),
             ),
             TextButton(
               onPressed: () {
                 //forgot password screen
+                 Navigator.push(context, MaterialPageRoute(builder: (context)=> ForgotPassword()));
               },
               child: const Text('パスワードを忘れた?'),
             ),
