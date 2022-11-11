@@ -1,13 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
-
+ 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+    final namecontroller = TextEditingController();
+    final passwordcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,6 +50,7 @@ class _SignUpPageState extends State<SignUpPage> {
             Container(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: const TextField(
+                
                 obscureText: true,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -65,6 +69,10 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: const Text('サインアップ'),
                   onPressed: () {
                    Navigator.pop(context);
+                   final name = namecontroller.text;
+                   final password = passwordcontroller.text;
+                   createUser( name : name);
+                   createPassword(password : password);
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Color.fromARGB(255, 44, 7, 74),
@@ -75,6 +83,22 @@ class _SignUpPageState extends State<SignUpPage> {
             
           ],
         )));
- 
+
   }
+  
+ Future createUser({required String name}) async{
+  final docUser = FirebaseFirestore.instance.collection('user-list').doc('my-id');
+
+  final json = {
+    'user-name' : name,
+  };
+ }
+ 
+Future createPassword({required String password}) async {
+  final docUser = FirebaseFirestore.instance.collection('user-list').doc('my-id');
+
+  final json = {
+    'password' : password,
+  };
+}
 }
