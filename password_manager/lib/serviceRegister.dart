@@ -18,9 +18,6 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
   Object? args;
   String? routeLocation;
 
-  List<DocumentSnapshot> docList = [];
-  List<String> data =[];
-
   @override
   Widget build(BuildContext context) {
     if (args == null) {
@@ -35,12 +32,8 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
         actions: [
           ElevatedButton(
             onPressed: () => {}, //ログイン画面に遷移する
-            child:  Text(
-              'ログアウト',
-            ),
-
             style: ElevatedButton.styleFrom(
-              textStyle: TextStyle(
+              textStyle: const TextStyle(
                 fontSize: 20,
               ),
               primary: Colors.lightBlue,
@@ -48,6 +41,9 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
                 color: Colors.white,
                 width: 2
               )
+            ), 
+            child: const Text(
+              'ログアウト',
             ),
           )
         ],
@@ -101,14 +97,14 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
                           });
                         },
                         style: const TextStyle(
-                          fontSize: 30,
+                          fontSize: 25,
                         ),
                       )
                     );
                 },
                 )
             ),
-            Container(
+            const SizedBox(
               width: double.infinity,
               height: 80,
             ),
@@ -126,18 +122,18 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
               width: double.infinity,
               height: 50,
               alignment: Alignment.center,
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Enter your Email address',
-                ),
-                onChanged: (Text) => email = Text,
-              ),
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(width: 1, color: Colors.blue)
               ),
+              child: TextField(
+                decoration: const InputDecoration(
+                  hintText: 'Enter your Email address',
+                ),
+                onChanged: (Text) => email = Text,
+              ),
             ),
-            Container(
+            const SizedBox(
               width: double.infinity,
               height: 80,
             ),
@@ -154,24 +150,23 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
             Container(
               width: double.infinity,
               height: 50,
-              margin: EdgeInsets.only(bottom: 30),
+              margin: const EdgeInsets.only(bottom: 30),
               alignment: Alignment.center,
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Enter your password',
-                ),
-                onChanged: (Text) => password = Text,
-              ),
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(width: 1, color: Colors.blue)
+              ),
+              child: TextField(
+                decoration: const InputDecoration(
+                  hintText: 'Enter your password',
+                ),
+                onChanged: (Text) => password = Text,
               ),
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.15,
               height: 50,
               child: ElevatedButton(
-                child: const Text('登録'),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.blue,
                   onPrimary: Colors.white,
@@ -183,7 +178,8 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
                     .doc()
                     .set({'service-name': isSelectedItem, 'email': email, 'password': password});
                   Navigator.pushNamed(context, '/list', arguments: routeLocation as String);
-                })
+                }),
+                child: const Text('登録')
               ),
             ),
           ],
