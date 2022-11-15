@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 
 class ServiceRegisterScreen extends StatefulWidget {
   const ServiceRegisterScreen({Key? key}) : super(key: key);
@@ -11,14 +15,23 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
   String? isSelectedItem;
   String? email;
   String? password;
-   Object? args;
+  Object? args;
   String? routeLocation;
+  int? count;
+
+  List<DocumentSnapshot> docList = [];
 
   @override
   Widget build(BuildContext context) {
     if (args == null) {
       args = ModalRoute.of(context)?.settings.arguments;
       routeLocation = args as String;
+    }
+
+    void getSnapshot () async{
+      final snapshot = await FirebaseFirestore.instance.collection('service-list').get();
+      docList = snapshot.docs;
+      count = docList.length;
     }
     
     return Scaffold(
@@ -63,20 +76,11 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
               height: 50,
               alignment: Alignment.center,
               child: DropdownButton(
-                items: const [
-                  DropdownMenuItem(
-                    child: Text('GitHub'),
-                    value: 'GitHub',
-                  ),
-                  DropdownMenuItem(
-                    child: Text('Google'),
-                    value: 'Google',
-                  ),
-                  DropdownMenuItem(
-                    child: Text('Microsoft'),
-                    value: 'Microsoft',
-                  ),
-                ],
+                items: docList.map<DropdownMenuItem<String>> ((document) {
+                  return DropdownMenuItem<String> (
+                    child: Text(document['service-name']),
+                  );
+                }).toList(),
                 onChanged: (String? value) {
                   setState(() {
                     isSelectedItem = value;
