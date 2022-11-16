@@ -1,6 +1,7 @@
-import 'dart:html';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 
 class ListScreen extends StatefulWidget {
   const ListScreen({Key? key, required String title,}) : super(key: key);
@@ -11,18 +12,7 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen> {
   Object? args;
   String? routeLocation;
-
-  List service = [
-    'GitHub',
-    'Google',
-    'Microsoft',
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-  ];
+  
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +33,7 @@ class _ListScreenState extends State<ListScreen> {
             ),
 
             style: ElevatedButton.styleFrom(
-              textStyle: TextStyle(
+              textStyle: const TextStyle(
                 fontSize: 20,
               ),
               primary: Colors.lightBlue,
@@ -62,43 +52,66 @@ class _ListScreenState extends State<ListScreen> {
               width: MediaQuery.of(context).size.width * 1,
               height: MediaQuery.of(context).size.height * 0.8,
               margin: const EdgeInsets.only(top: 10, bottom: 10),
-              child: ListView.builder(
-                itemCount: service.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    height: 100,
-                    width: MediaQuery.of(context).size.width * 1,
-                    color: Colors.grey.withOpacity(0.1),
-                    margin: const EdgeInsets.only(top: 10),
-                    child: Row(
-                      children: [
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          height: 100,
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          child: Text(
-                            service[index],
-                            style: const TextStyle(
-                              fontSize: 30,
+              child: StreamBuilder<QuerySnapshot> (
+                stream: FirebaseFirestore.instance
+                  .collection('Sato-Jin')
+                  .orderBy('service-name')
+                  .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return const Text('エラーが発生しました');
+                  }
+                  if (!snapshot.hasData){
+                    return const Center(child: CircularProgressIndicator(),);
+                  }
+                  final serviceList = snapshot.requireData.docs
+                    .map<String> ((DocumentSnapshot document) {
+                      final documentData = document.data()! as Map<String, dynamic>;
+                      return documentData['service-name']! as String;
+                  }).toList();
+
+                  return ListView.builder(
+                    itemCount: serviceList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        height: 100,
+                        width: MediaQuery.of(context).size.width * 1,
+                        color: Colors.grey.withOpacity(0.1),
+                        margin: const EdgeInsets.only(top: 10),
+              
+                        child: Row(
+                          children: [
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              height: 100,
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              padding: const EdgeInsets.only(left: 35),
+                              child: Text(
+                                serviceList[index],
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.centerRight,
-                          height: 100,
-                          width: MediaQuery.of(context).size.width * 0.6,
-                          child: IconButton(
-                            icon: const Icon(Icons.arrow_forward_ios),
-                            onPressed: (() {
-                              Navigator.pushNamed(context, '/view');
-                            })
-                          ),
-                        ),
-                      ],
-                    )
+                            Container(
+                              alignment: Alignment.centerRight,
+                              height: 100,
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              padding: const EdgeInsets.only(right: 25),
+                              child: IconButton(
+                                icon: const Icon(Icons.arrow_forward_ios),
+                                onPressed: (() {
+                                  Navigator.pushNamed(context, '/view');
+                                })
+                              ),
+                            ),
+                          ],
+                        )
+                      );
+                    }
                   );
                 }
-              ),
+                )
             ),
             //ここは管理者画面から来た場合のみ表示
             Visibility(
@@ -107,7 +120,7 @@ class _ListScreenState extends State<ListScreen> {
                 width: MediaQuery.of(context).size.width * 0.3,
                 height: 50,
                 child: ElevatedButton(
-                  child: Text('ユーザー削除'),
+                  child: const Text('ユーザー削除'),
                   style: ElevatedButton.styleFrom(
                     primary: Colors.red.withOpacity(0.8),
                     onPrimary: Colors.white,
