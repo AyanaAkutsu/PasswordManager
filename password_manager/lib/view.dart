@@ -1,6 +1,4 @@
 
-import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'main.dart';
@@ -15,20 +13,20 @@ class _ViewScreenStateState extends State<ViewScreenState> {
   String service = "";  //こうしないと、表示するときにエラーになります…
   String email = "";
   String password = "";
-
-  _getField() async {
+ 
+  @override
+  Widget build(BuildContext context) {
+          _getField()  {setState() async{
     //今は阿久津コレクションを指定していますが、実際は最初にコレクション名を取得します
-    final getDocument = await FirebaseFirestore.instance.collection('Ayana-Akutsu').doc('9BxcgzndZD5yoHw4qodv').get();
+    final getDocument =  await FirebaseFirestore.instance.collection('Akutsu-Ayana').doc('9BxcgzndZD5yoHw4qodv').get();
     service = getDocument.get('service-name');
     email = getDocument.get('email');
     password = getDocument.get('password');
-    
+    print(service);
   }
-
-  
-
-  @override
-  Widget build(BuildContext context) {
+          }
+          _getField();
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text("View Screen"),
@@ -54,11 +52,13 @@ class _ViewScreenStateState extends State<ViewScreenState> {
         ],
       ),
       body: Column(children: [
-            
+       
+              
 
             Container(
               alignment: Alignment.centerLeft,
-              child: const Text(
+              child: 
+              const Text(
                 "サービス名：",
                 style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -68,6 +68,8 @@ class _ViewScreenStateState extends State<ViewScreenState> {
         
             ),
 
+            
+
             Container(
               width: double.infinity,
               height: 50,
@@ -75,6 +77,7 @@ class _ViewScreenStateState extends State<ViewScreenState> {
               child: Text(
                 service,
                 style: TextStyle(
+                  color: Colors.black,
                   fontSize: 20
                 ),
               ),
