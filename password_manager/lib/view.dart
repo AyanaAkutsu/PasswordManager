@@ -7,6 +7,7 @@ class ViewScreenState extends StatefulWidget {
   @override
   State<ViewScreenState> createState() => _ViewScreenStateState();
 }
+
 class _ViewScreenStateState extends State<ViewScreenState> {
   @override
   Widget build(BuildContext context) {
@@ -132,7 +133,7 @@ class _ViewScreenStateState extends State<ViewScreenState> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Navigator.pushNamed(context, '/edit');
+          Navigator.of(context).pushNamed('/edit',arguments: {'userName': 'Sato-Jin', 'serviceName': 'Google'});
         },
         child: const Text("Edit"),
       ),

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class EditScreen extends StatefulWidget {
@@ -8,11 +9,15 @@ class EditScreen extends StatefulWidget {
 
 class _EditScreenState extends State<EditScreen> {
   String? isSelectedItem;
-  String? email = "sss";
-  String? password = "qwerty";
+  String? email;
+  String? password;
+  String? docId;
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    final userName = args['userName']!;
+    final serviceName = args['serviceName']!;
     
     return Scaffold(
       appBar: AppBar(
@@ -21,12 +26,9 @@ class _EditScreenState extends State<EditScreen> {
         actions: [
           ElevatedButton(
             onPressed: () => {}, //ログイン画面に遷移する
-            child: const Text(
-              "ログアウト"
-            ),
 
             style: ElevatedButton.styleFrom(
-              textStyle: TextStyle(
+              textStyle: const TextStyle(
                 fontSize: 20,
               ),
               primary: Colors.lightBlue,
@@ -34,108 +36,139 @@ class _EditScreenState extends State<EditScreen> {
                 color: Colors.white,
                 width: 2
               )
+            ), 
+            child: const Text(
+              "ログアウト"
             ),
           )
         ],
         
       ),
 
-      body: Column(
-        children: [
-          Container(
-            alignment: Alignment.center,
-            child: const Text(
-              "登録内容の編集",
-              style: TextStyle(
-                fontSize: 24,
-                color: Colors.blue,
-                fontWeight: FontWeight.bold
-              ),
-            ),
-          ),
+      body: Center (
+        child: StreamBuilder<QuerySnapshot> (
+          stream: FirebaseFirestore.instance
+            .collection(userName)
+            .where('service-name', isEqualTo: serviceName)
+            .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Text('エラーが発生しました');
+            }
+            if (!snapshot.hasData){
+              return const Center(child: CircularProgressIndicator(),);
+            }
+            final service = snapshot.requireData.docs.toList();
+            email = service[0].get('email');
+            password = service[0].get('password');
+            docId = service[0].id;
 
-          Container(
-              width: double.infinity,
-              height: 50,
-          ),
-
-          Container(
-            alignment: Alignment.centerLeft,
-            child: const Text(
-              "メールアドレス：", 
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 24
-              ),
-            ),
-          ),
-
-          Container(
-            child: TextField(
-              controller: TextEditingController(text: email),
-               decoration: const InputDecoration(
-                  hintText: 'Enter your Email address',
+            return Column(
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "登録内容を編集",
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
                 ),
-                onChanged: ((text) => email),
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(width: 1, color: Colors.blue)
-              ),
-          ),
 
-          Container(
-              width: double.infinity,
-              height: 80,
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              child: const Text(
-                "パスワード：",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
+                const SizedBox(
+                    width: double.infinity,
+                    height: 50,
                 ),
-              ),
-            ),
 
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                    "メールアドレス：", 
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24
+                    ),
+                  ),
+                ),
+
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(width: 1, color: Colors.blue)
+                    ),
+                  child: TextField(
+                    controller: TextEditingController(text: email),
+                    decoration: const InputDecoration(
+                        hintText: 'Enter your Email address',
+                      ),
+                      onChanged: (text) => email = text,
+                    ),
+                ),
+
+                const SizedBox(
+                  width: double.infinity,
+                  height: 80,
+                ),
+
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                    "パスワード：",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                    ),
+                  ),
+                ),
+
+                Container(
+                  width: double.infinity,
+                  height: 50,
+                  margin: EdgeInsets.only(bottom: 30),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(width: 1, color: Colors.blue)
+                  ),
+                  child: TextField(
+                    controller: TextEditingController(text: password),
+                    decoration: const InputDecoration(
+                      hintText: 'Enter your password',
+                    ),
+                    onChanged: (text) => password = text,
+                  ),
+                ),
+
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.15,
+                  height: 50,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue,
+                      onPrimary: Colors.white,
+                      elevation: 15,
+                    ),
+                    onPressed: (() async{
+                      await FirebaseFirestore.instance
+                        .collection('Sato-Jin')
+                        .doc(docId)
+                        .set({'service-name': serviceName, 'email': email, 'password': password});
+                      Navigator.of(context).pushNamed('/view', arguments: {'userName': userName, 'serviceName': serviceName});
+                    }),
+                    child: const Text('確定')
+                  ),
+                ),
+              ],
+            );
+          }
+
+        )
+      )
+      // Column(
         
-
-           Container(
-              width: double.infinity,
-              height: 50,
-              margin: EdgeInsets.only(bottom: 30),
-              alignment: Alignment.center,
-              child: TextField(
-                controller: TextEditingController(text: password),
-                decoration: const InputDecoration(
-                  hintText: 'Enter your password',
-                ),
-                onChanged: (text) => password,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(width: 1, color: Colors.blue)
-              ),
-            ),
-
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.15,
-              height: 50,
-              child: ElevatedButton(
-                child: const Text('確定'),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue,
-                  onPrimary: Colors.white,
-                  elevation: 15,
-                ),
-                onPressed: (() {
-                  Navigator.pushNamed(context, '/list');
-                })
-              ),
-            ),
-        ],
-      ),
+      //),
     );
   }
 }
