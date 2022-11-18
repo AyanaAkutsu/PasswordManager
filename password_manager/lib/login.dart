@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:password_manager/adminTop.dart';
 import 'package:password_manager/screens/forgotpassword.dart';
 import 'package:password_manager/screens/signup.dart';
 
@@ -15,7 +16,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
-      
+    
       home: Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -34,9 +35,8 @@ class MyStatefulWidget extends StatefulWidget {
 }
  
 class Login extends State<MyStatefulWidget> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
- 
+
+ bool _isvisible = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -63,8 +63,6 @@ class Login extends State<MyStatefulWidget> {
             Container(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: TextField(
-              
-                controller: passwordController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'ユーザー名',
@@ -73,15 +71,20 @@ class Login extends State<MyStatefulWidget> {
             ),
             Container(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: TextField(
-                obscureText: true,
-                controller: passwordController,
-                decoration: const InputDecoration(
+              child: TextFormField(
+                obscureText: !_isvisible,
+                decoration:  InputDecoration(
+                    suffixIcon: IconButton(
+                    onPressed: (() {
+                      setState(() {
+                        _isvisible = !_isvisible;
+                      });
+                    }),
+                    icon: _isvisible ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
+                  ),
                   border: OutlineInputBorder(),
                   labelText: 'パスワード',
-                  suffixIcon: Icon(Icons.visibility_off),
-                  suffixIconConstraints:
-                  BoxConstraints(maxHeight: 30, maxWidth: 30)
+              
                 ),
               ),
             ),
@@ -98,7 +101,7 @@ class Login extends State<MyStatefulWidget> {
                 child: ElevatedButton(
                   child: const Text('ログイン'),
                   onPressed: () {
-                   
+                   Navigator.push(context, MaterialPageRoute(builder: (context)=> AdminScreen(title: 'Admin Screen')) );
                   },
                 )
             ),

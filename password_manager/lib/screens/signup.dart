@@ -9,14 +9,18 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-    final namecontroller = TextEditingController();
-    final passwordcontroller = TextEditingController();
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
+    final namecontroller = TextEditingController();
+    final passwordcontroller = TextEditingController();
+
     return Scaffold(
-      body : Padding(
-        padding: const EdgeInsets.all(10),
-        child: ListView(
+      body :  ListView(
           children: <Widget>[
             Container(
                 alignment: Alignment.center,
@@ -30,49 +34,53 @@ class _SignUpPageState extends State<SignUpPage> {
                 )),
             Container(
                 padding: const  EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: const TextField(
+              child: TextFormField(
+                controller: namecontroller,
+                // ignore: prefer_const_constructors
                 decoration: InputDecoration(
+                  // ignore: prefer_const_constructors
+                
                   border: OutlineInputBorder(),
                   labelText: 'ユーザー名',
+                 
                 ),
+                  
               ),
             ),
             Container(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child:  const TextField(
-                obscureText: true,
+              child:  TextFormField(
+                controller: passwordcontroller,
+                obscureText: false,
+              
+                // ignore: prefer_const_constructors
                 decoration: InputDecoration(
+                  
+                  // ignore: prefer_const_constructors
                   border: OutlineInputBorder(),
-                  labelText: 'パスワード',
+                  hintText: 'パスワード',
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20)
                 ),
-              ),
+          
             ),
-            Container(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: const TextField(
-                
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'パスワードの確認',
-                ),
-              ),
             ),
+
             Container(
                 height: 20,
             ),
+
 
             Container(
                 height: 50,
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: ElevatedButton(
                   child: const Text('サインアップ'),
-                  onPressed: () {
-                   Navigator.pop(context);
+                  onPressed:   () {
                    final name = namecontroller.text;
                    final password = passwordcontroller.text;
-                   createUser( name : name);
-                   createPassword(password : password);
+                   createUser(name:name, password:password);
+    
+                   Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Color.fromARGB(255, 44, 7, 74),
@@ -80,25 +88,22 @@ class _SignUpPageState extends State<SignUpPage> {
                   
                 )
             ),
-            
+          
           ],
-        )));
-
-  }
+        ));
   
- Future createUser({required String name}) async{
-  final docUser = FirebaseFirestore.instance.collection('user-list').doc('my-id');
+  
+  }
 
-  final json = {
-    'user-name' : name,
-  };
- }
- 
-Future createPassword({required String password}) async {
-  final docUser = FirebaseFirestore.instance.collection('user-list').doc('my-id');
 
-  final json = {
-    'password' : password,
-  };
 }
+
+Future createUser({required String name, required String password}) async{
+  final docUser = FirebaseFirestore.instance.collection('user-list').doc();
+  
+  final json = {
+    'user-name': name,
+    'password': password
+  };
+  await docUser.set(json);
 }

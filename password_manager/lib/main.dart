@@ -17,7 +17,8 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(const MyApp()
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/':(BuildContext context) => AdminScreen(title: 'Admin Top'),//ログイン画面が完成したらここをログイン画面にする 
+        '/':(BuildContext context) => LoginPage(),//ログイン画面が完成したらここをログイン画面にする 
         '/edit': (BuildContext context) => EditScreen(title: 'Edit Screen'),
         '/serviceRegister': (BuildContext context) => ServiceRegisterScreen(),
         '/view': (BuildContext context) => ViewScreenState(title: 'View Screen'),
