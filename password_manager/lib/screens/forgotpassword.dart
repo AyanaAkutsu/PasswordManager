@@ -1,20 +1,26 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPassword extends StatefulWidget {
-  const ForgotPassword({Key? key, required String title}) : super(key: key);
+  const ForgotPassword({Key? key}) : super(key: key);
 
   @override
   State<ForgotPassword> createState() => _ForgotPass();
 }
 
 class _ForgotPass extends State<ForgotPassword> {
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  bool passwordConf = false;
+  
+    
+  
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      
-      body : Padding(
-        padding: const EdgeInsets.all(10),
-        child: ListView(
+    if( passwordController.text.trim() == confirmPasswordController.text.trim()) {passwordConf = true;} else {passwordConf = false;}
+    return Scaffold (
+    
+        body: ListView(
           children: <Widget>[
             Container(
                 alignment: Alignment.center,
@@ -26,30 +32,21 @@ class _ForgotPass extends State<ForgotPassword> {
                       fontWeight: FontWeight.w500,
                       fontSize: 30),
                 )),
-            Container(
-                padding: const  EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: const TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  // prefixIcon: Icon(Icons.email),
-                  labelText: '登録している名前',
-                ),
-              ),
-            ),
-            Container(
+     
+            Container(           
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child:  const TextField(
-            
+              child:   TextFormField(             
+                controller: passwordController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: '新しいパスワード',
                 ),
+                
               ),
             ),
             Container(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: const TextField(
-              
+              child: const TextField(              
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'パスワードの確認',
@@ -64,10 +61,19 @@ class _ForgotPass extends State<ForgotPassword> {
                 height: 50,
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: ElevatedButton(
+                
+                  onPressed: passwordConf ? () {
+                  final password =passwordController.text;
+                  final docUser = FirebaseFirestore.instance.collection('Obata-Youssef').doc('personal-data');
+                  docUser.update({ 'password': password,},
                   
-                  onPressed: () {
-                   Navigator.pop(context);
-                  },
+                  
+                  );
+                    Navigator.pop(context);
+                     setState(() {
+                     
+                   });
+                  } : null,
                   style: ElevatedButton.styleFrom(
                     primary: Color.fromARGB(255, 74, 73, 7),
                   ),
@@ -77,7 +83,7 @@ class _ForgotPass extends State<ForgotPassword> {
             ),
             
           ],
-        )));
+        ));
  
   }
 }

@@ -34,7 +34,6 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/':(BuildContext context) => MyStatefulWidget(),
-        //'/':(BuildContext context) => AdminScreen(title: 'Admin Top'),//ログイン画面が完成したらここをログイン画面にする 
         '/edit': (BuildContext context) => EditScreen(title: 'Edit Screen'),
         '/serviceRegister': (BuildContext context) => ServiceRegisterScreen(),
         '/view': (BuildContext context) => ViewScreenState(title: 'View Screen'),
@@ -42,7 +41,7 @@ class MyApp extends StatelessWidget {
         '/userList':(BuildContext context) => UserListScreen(title: 'User List'),
         '/adminTop':(BuildContext context) => AdminScreen(title: 'Admin Top'),
         '/signup' :(BuildContext context) => SignUpPage(),
-        '/forgotPassword': (BuildContext context) => ForgotPassword(title: 'Forgot Password',),
+        '/forgotPassword': (BuildContext context) => ForgotPassword(),
       },
     );
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+// import 'package:flutter/rendering.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -89,7 +89,9 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
                         value: isSelectedItem,
                         items: lists
                         .map((String list) =>
-                          DropdownMenuItem(value: list, child: Text(list)))
+                          DropdownMenuItem(value: list, child: Text(
+                            list,
+                            style: TextStyle(color: Colors.black),)))
                         .toList(),
                         onChanged: (String? value) {
                           setState(() {
