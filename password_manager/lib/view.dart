@@ -4,40 +4,20 @@ import 'package:flutter/material.dart';
 import 'main.dart';
 
 class ViewScreenState extends StatefulWidget {
-  const ViewScreenState({Key? key, required String title}) : super(key: key);
+  const ViewScreenState({Key? key, required String title,}) : super(key: key);
   @override
   State<ViewScreenState> createState() => _ViewScreenStateState();
 }
 
 class _ViewScreenStateState extends State<ViewScreenState> {
-  //今は阿久津コレクションを指定していますが、実際は最初にコレクション名を取得します
-  
-  String? selectedDocument; //前の画面でドキュメント名を取得することを考えています。未実装
-  // final  service = getDocument.;//こうしないと、表示するときにエラーになります…
-  // String email = ;
-  // late String password = getDocument.get('password').toString();
-
-  late Map<String, dynamic> docSnapshot;
-    @override
-    void initState() {
-      super.initState();
-      Future(() async {
-         final DocumentSnapshot getDocument = await FirebaseFirestore.instance
-            .collection('Akutsu-Ayana')
-            .doc('hF06TBAPoeqXgd71w6Rc')
-            .get();
-        
-        setState((){
-          docSnapshot = getDocument.data() as Map<String, dynamic>;
-        });
-
-      });
-      
-    }
+ 
   @override
   Widget build(BuildContext context) {
-    
-   
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, String>;
+    final email = args['email']!; 
+    final service = args['service']!;
+    final password = args['password']!;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("View Screen"),
@@ -88,7 +68,7 @@ class _ViewScreenStateState extends State<ViewScreenState> {
               height: 50,
               alignment: Alignment.center,
               child: Text(
-                docSnapshot['service-name'].toString(),
+                service,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 20
@@ -121,7 +101,7 @@ class _ViewScreenStateState extends State<ViewScreenState> {
               height: 50,
               alignment: Alignment.center,
               child: Text(
-                docSnapshot['email'].toString(),
+                email,
                 style: TextStyle(
                   fontSize: 20
                 ),
@@ -153,7 +133,7 @@ class _ViewScreenStateState extends State<ViewScreenState> {
               height: 50,
               alignment: Alignment.center,
               child: Text(
-                docSnapshot['password'].toString(),
+                password,
                 style: TextStyle(
                   fontSize: 20
                 ),
@@ -169,7 +149,7 @@ class _ViewScreenStateState extends State<ViewScreenState> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Navigator.of(context).pushNamed('/edit',arguments: {'userName': 'Sato-Jin', 'serviceName': 'Google'});
+          Navigator.of(context).pushNamed('/edit',arguments: {'userName': 'Sato-Jin', 'serviceName': 'service-name'});
         },
         child: const Text("Edit"),
       ),
