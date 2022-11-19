@@ -54,7 +54,7 @@ class _ListScreenState extends State<ListScreen> {
               margin: const EdgeInsets.only(top: 10, bottom: 10),
               child: StreamBuilder<QuerySnapshot> (
                 stream: FirebaseFirestore.instance
-                  .collection('Sato-Jin')
+                  .collection(routeLocation!)
                   .orderBy('service-name')
                   .snapshots(),
                 builder: (context, snapshot) {
