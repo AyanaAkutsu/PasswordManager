@@ -71,7 +71,7 @@ class _AdminScreenState extends State<AdminScreen> {
                     elevation: 15,
                   ),
                   onPressed: (() {
-                    Navigator.of(context).pushNamed(destination[index], arguments: 'admin');
+                    Navigator.of(context).pushNamed(destination[index], arguments: 'Sato-Jin');
                   })
                 ),
               );

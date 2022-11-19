@@ -100,8 +100,12 @@ class _ListScreenState extends State<ListScreen> {
                               padding: const EdgeInsets.only(right: 25),
                               child: IconButton(
                                 icon: const Icon(Icons.arrow_forward_ios),
-                                onPressed: (() {
-                                  Navigator.pushNamed(context, '/view');
+                                onPressed: (() async{
+                                  final getDocument = await FirebaseFirestore.instance.collection(routeLocation!).where('service-name', isEqualTo: serviceList[index]).get();
+                                  final docSnapshot = getDocument.docs.toList();
+                                  final email = docSnapshot[0].get('email') as String;
+                                  final password = docSnapshot[0].get('password')as String;
+                                  Navigator.of(context).pushNamed( '/view', arguments: {"service": serviceList[index], "email": email, "password": password});
                                 })
                               ),
                             ),

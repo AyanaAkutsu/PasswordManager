@@ -1,16 +1,23 @@
 
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'main.dart';
 
 class ViewScreenState extends StatefulWidget {
-  const ViewScreenState({Key? key, required String title}) : super(key: key);
+  const ViewScreenState({Key? key, required String title,}) : super(key: key);
   @override
   State<ViewScreenState> createState() => _ViewScreenStateState();
 }
 
 class _ViewScreenStateState extends State<ViewScreenState> {
+ 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, String>;
+    final email = args['email']!; 
+    final service = args['service']!;
+    final password = args['password']!;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("View Screen"),
@@ -35,10 +42,16 @@ class _ViewScreenStateState extends State<ViewScreenState> {
           )
         ],
       ),
-      body: Column(children: [
+      body: 
+                   
+         Column(children: [
+       
+              
+
             Container(
               alignment: Alignment.centerLeft,
-              child: const Text(
+              child: 
+              const Text(
                 "サービス名：",
                 style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -48,13 +61,16 @@ class _ViewScreenStateState extends State<ViewScreenState> {
         
             ),
 
+            
+
             Container(
               width: double.infinity,
               height: 50,
               alignment: Alignment.center,
-              child: const Text(
-                "example",
+              child: Text(
+                service,
                 style: TextStyle(
+                  color: Colors.black,
                   fontSize: 20
                 ),
               ),
@@ -84,8 +100,8 @@ class _ViewScreenStateState extends State<ViewScreenState> {
               width: double.infinity,
               height: 50,
               alignment: Alignment.center,
-              child: const Text(
-                "example@.com",
+              child: Text(
+                email,
                 style: TextStyle(
                   fontSize: 20
                 ),
@@ -116,8 +132,8 @@ class _ViewScreenStateState extends State<ViewScreenState> {
               width: double.infinity,
               height: 50,
               alignment: Alignment.center,
-              child: const Text(
-                "example@.com",
+              child: Text(
+                password,
                 style: TextStyle(
                   fontSize: 20
                 ),
@@ -133,10 +149,11 @@ class _ViewScreenStateState extends State<ViewScreenState> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Navigator.of(context).pushNamed('/edit',arguments: {'userName': 'Sato-Jin', 'serviceName': 'Google'});
+          Navigator.of(context).pushNamed('/edit',arguments: {'userName': 'Sato-Jin', 'serviceName': 'service-name'});
         },
         child: const Text("Edit"),
       ),
     );
+  
   }
 }
