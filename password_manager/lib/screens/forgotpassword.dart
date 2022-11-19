@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ForgotPassword extends StatefulWidget {
-  const ForgotPassword({Key? key}) : super(key: key);
+  const ForgotPassword({Key? key, required String title}) : super(key: key);
 
   @override
   State<ForgotPassword> createState() => _ForgotPass();
@@ -31,8 +31,8 @@ class _ForgotPass extends State<ForgotPassword> {
               child: const TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.email),
-                  labelText: 'メールアドレス',
+                  // prefixIcon: Icon(Icons.email),
+                  labelText: '登録している名前',
                 ),
               ),
             ),
