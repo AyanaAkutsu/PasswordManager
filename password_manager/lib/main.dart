@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         '/':(BuildContext context) => MyStatefulWidget(),
         '/edit': (BuildContext context) => EditScreen(title: 'Edit Screen'),
         '/serviceRegister': (BuildContext context) => ServiceRegisterScreen(),
-        '/view': (BuildContext context) => ViewScreenState(title: 'View Screen'),
+        '/view': (BuildContext context) => ViewScreenState(title: 'View Screen',),
         '/list':(BuildContext context) => ListScreen(title: 'Service List'),
         '/userList':(BuildContext context) => UserListScreen(title: 'User List'),
         '/adminTop':(BuildContext context) => AdminScreen(title: 'Admin Top'),
