@@ -7,7 +7,7 @@ import 'package:password_manager/screens/signup.dart';
 
  
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key, required String title}) : super(key: key);
  
   static const String _title = 'Password Manager';
  

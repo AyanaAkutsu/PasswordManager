@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
+        //'/':(BuildContext context) => LoginPage(title: 'Login Page'),
         '/':(BuildContext context) => AdminScreen(title: 'Admin Top'),//ログイン画面が完成したらここをログイン画面にする 
         '/edit': (BuildContext context) => EditScreen(title: 'Edit Screen'),
         '/serviceRegister': (BuildContext context) => ServiceRegisterScreen(),
