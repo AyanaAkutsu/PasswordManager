@@ -108,5 +108,7 @@ Future<void> createUser({required String name, required String password}) async{
   };
 
   await FirebaseFirestore.instance.collection('user-list').doc().set(json);
+
+  await FirebaseFirestore.instance.collection(name).doc('personal-data').set({'name': name, 'password': password});
   
 }
