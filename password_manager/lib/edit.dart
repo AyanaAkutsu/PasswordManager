@@ -157,7 +157,7 @@ class _EditScreenState extends State<EditScreen> {
                     ),
                     onPressed: (() async{
                       await FirebaseFirestore.instance
-                        .collection('Sato-Jin')
+                        .collection(userName)
                         .doc(docId)
                         .set({'service-name': serviceName, 'email': email, 'password': password});
                       Navigator.of(context).pushNamed('/view', arguments: {'userName': userName, "service": serviceName, "email": email, "password": password});
