@@ -15,17 +15,22 @@ class _EditScreenState extends State<EditScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final userName = args['userName']!;
     final serviceName = args['serviceName']!;
     
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text("Edit Screen"),
+
+        automaticallyImplyLeading: false,
 
         actions: [
           ElevatedButton(
-            onPressed: () => {}, //ログイン画面に遷移する
+            onPressed: () => {
+              Navigator.of(context).pushNamed('/')
+            }, //ログイン画面に遷移する
 
             style: ElevatedButton.styleFrom(
               textStyle: const TextStyle(
@@ -155,7 +160,7 @@ class _EditScreenState extends State<EditScreen> {
                         .collection('Sato-Jin')
                         .doc(docId)
                         .set({'service-name': serviceName, 'email': email, 'password': password});
-                      Navigator.of(context).pushNamed('/view', arguments: {'userName': userName, 'serviceName': serviceName});
+                      Navigator.of(context).pushNamed('/view', arguments: {'userName': userName, "service": serviceName, "email": email, "password": password});
                     }),
                     child: const Text('確定')
                   ),

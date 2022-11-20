@@ -12,18 +12,45 @@ class _ViewScreenStateState extends State<ViewScreenState> {
  
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)?.settings.arguments as Map<String, String>;
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final userName = args['userName']!;
     final email = args['email']!; 
     final service = args['service']!;
     final password = args['password']!;
 
     return Scaffold(
       appBar: AppBar(
+        leading: Container(
+          child: ElevatedButton(
+            onPressed: () => {
+              Navigator.of(context).pushNamed('/list', arguments: userName)
+            }, 
+            child: const Text(
+              "戻る"
+            ),
+
+            style: ElevatedButton.styleFrom(
+              textStyle: TextStyle(
+                fontSize: 20,
+              ),
+              primary: Colors.lightBlue,
+              side: const BorderSide(
+                color: Colors.white,
+                width: 2
+              )
+            ),
+          ),
+        ),
+        centerTitle: true,
         title: const Text("View Screen"),
+
+        automaticallyImplyLeading: false,
         
         actions: [
           ElevatedButton(
-            onPressed: () => {}, //ログイン画面に遷移する
+            onPressed: () => {
+              Navigator.of(context).pushNamed('/')
+            }, //ログイン画面に遷移する
             child: const Text(
               "ログアウト"
             ),
@@ -148,7 +175,7 @@ class _ViewScreenStateState extends State<ViewScreenState> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Navigator.of(context).pushNamed('/edit',arguments: {'userName': 'Sato-Jin', 'serviceName': 'service-name'});
+          Navigator.of(context).pushNamed('/edit',arguments: {'userName': userName, 'serviceName': service});
         },
         child: const Text("Edit"),
       ),

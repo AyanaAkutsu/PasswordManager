@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter/rendering.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -27,11 +26,37 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
     
     return Scaffold(
       appBar: AppBar(
+        leading: Container(
+          child: ElevatedButton(
+            onPressed: () => {
+              Navigator.of(context).pushNamed('/list', arguments: routeLocation)
+            }, 
+            child: const Text(
+              "戻る"
+            ),
+
+            style: ElevatedButton.styleFrom(
+              textStyle: TextStyle(
+                fontSize: 20,
+              ),
+              primary: Colors.lightBlue,
+              side: const BorderSide(
+                color: Colors.white,
+                width: 2
+              )
+            ),
+          ),
+        ),
+        centerTitle: true,
         title: const Text('サービス登録'),
+
+        automaticallyImplyLeading: false,
 
         actions: [
           ElevatedButton(
-            onPressed: () => {}, //ログイン画面に遷移する
+            onPressed: () => {
+              Navigator.of(context).pushNamed('/')
+            }, //ログイン画面に遷移する
             style: ElevatedButton.styleFrom(
               textStyle: const TextStyle(
                 fontSize: 20,
@@ -176,7 +201,7 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
                 ),
                 onPressed: (() async{
                   await FirebaseFirestore.instance
-                    .collection('Sato-Jin')
+                    .collection(routeLocation!)
                     .doc()
                     .set({'service-name': isSelectedItem, 'email': email, 'password': password});
                   Navigator.pushNamed(context, '/list', arguments: routeLocation as String);

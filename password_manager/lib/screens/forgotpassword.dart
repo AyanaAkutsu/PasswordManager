@@ -9,15 +9,14 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPass extends State<ForgotPassword> {
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
-  bool passwordConf = false;
   
-    
-  
+  String? password1;
+  String? password2;
+  String? userName;
+  int count = 0;
+
   @override
   Widget build(BuildContext context) {
-    if( passwordController.text.trim() == confirmPasswordController.text.trim()) {passwordConf = true;} else {passwordConf = false;}
     return Scaffold (
     
         body: ListView(
@@ -32,12 +31,24 @@ class _ForgotPass extends State<ForgotPassword> {
                       fontWeight: FontWeight.w500,
                       fontSize: 30),
                 )),
-     
+
+             Container(           
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child:  TextFormField(
+                onChanged: (value) => userName = value,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'ユーザー名',
+                ),
+                
+              ),
+            ),
+
             Container(           
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child:   TextFormField(             
-                controller: passwordController,
-                decoration: InputDecoration(
+              child:  TextFormField(
+                onChanged: (value) => password1 = value,
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: '新しいパスワード',
                 ),
@@ -46,8 +57,9 @@ class _ForgotPass extends State<ForgotPassword> {
             ),
             Container(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: const TextField(              
-                decoration: InputDecoration(
+              child: TextField(
+                onChanged: (value) => password2 = value,
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'パスワードの確認',
                 ),
@@ -62,18 +74,22 @@ class _ForgotPass extends State<ForgotPassword> {
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: ElevatedButton(
                 
-                  onPressed: passwordConf ? () {
-                  final password =passwordController.text;
-                  final docUser = FirebaseFirestore.instance.collection('Obata-Youssef').doc('personal-data');
-                  docUser.update({ 'password': password,},
-                  
-                  
-                  );
-                    Navigator.pop(context);
-                     setState(() {
-                     
-                   });
-                  } : null,
+                  onPressed: () async{
+                    final querySnapshot = await FirebaseFirestore.instance
+                      .collection('user-list')
+                      .where('name', isEqualTo: userName)
+                      .get();
+                    final docUsers = querySnapshot.docs.toList();
+
+                    if (querySnapshot.size == 0 || password1 != password2) {
+                      return setState(() {
+                        count = 1;
+                      });
+                    } else {
+                      FirebaseFirestore.instance.collection('user-list').doc(docUsers[0].id).update({'password': password1});
+                    }
+                    Navigator.of(context).pushNamed('/');
+                  },
                   style: ElevatedButton.styleFrom(
                     primary: Color.fromARGB(255, 74, 73, 7),
                   ),
@@ -81,7 +97,22 @@ class _ForgotPass extends State<ForgotPassword> {
                   
                 )
             ),
-            
+
+            Visibility(
+              visible: count == 1,
+              child: Container(
+                alignment: Alignment.center,
+                width: MediaQuery.of(context).size.width * 0.3,
+                height: 50,
+                child: const Text(
+                  'ユーザー名かパスワードが間違っています',
+                  style: TextStyle(
+                    color: Colors.red,
+                  ),
+                  )
+              ),
+            ),
+
           ],
         ));
  
