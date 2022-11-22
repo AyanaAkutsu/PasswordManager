@@ -25,7 +25,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: const Text(
                   'Sign Up',
                   style: TextStyle(
-                      color: Color.fromARGB(255, 44, 7, 74),
+                      color: Colors.blue,
                       fontWeight: FontWeight.w500,
                       fontSize: 30),
                 )),
@@ -70,7 +70,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     Navigator.of(context).pushNamed('/');
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: const Color.fromARGB(255, 44, 7, 74),
+                    //primary: const Color.fromARGB(255, 44, 7, 74),
                   ),
                   child: const Text('サインアップ'),
                 )
