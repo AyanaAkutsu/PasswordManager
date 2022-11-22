@@ -19,6 +19,7 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     if (args == null) {
       args = ModalRoute.of(context)?.settings.arguments;
       routeLocation = args as String;
@@ -73,7 +74,8 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
           )
         ],
       ),
-      body: Center(
+      body: SingleChildScrollView(
+        reverse: true,
         child: Column(
           children: [
            Container(

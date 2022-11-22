@@ -12,13 +12,13 @@ class _EditScreenState extends State<EditScreen> {
   String? email;
   String? password;
   String? docId;
-
+  
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final userName = args['userName']!;
-    final serviceName = args['serviceName']!;
-    
+    final serviceName = args['serviceName']!;;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -50,7 +50,8 @@ class _EditScreenState extends State<EditScreen> {
         
       ),
 
-      body: Center (
+      body: SingleChildScrollView (
+        reverse: true,
         child: StreamBuilder<QuerySnapshot> (
           stream: FirebaseFirestore.instance
             .collection(userName)
