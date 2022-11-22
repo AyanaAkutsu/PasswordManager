@@ -27,7 +27,7 @@ class _ForgotPass extends State<ForgotPassword> {
                 child: const Text(
                   'パスワードのリセット',
                   style: TextStyle(
-                      color: Colors.black45,
+                      color: Colors.blue,
                       fontWeight: FontWeight.w500,
                       fontSize: 30),
                 )),
@@ -91,7 +91,7 @@ class _ForgotPass extends State<ForgotPassword> {
                     Navigator.of(context).pushNamed('/');
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 74, 73, 7),
+                    //primary: Color.fromARGB(255, 74, 73, 7),
                   ),
                    child: const Text('パスワードをリセットする'),
                   
