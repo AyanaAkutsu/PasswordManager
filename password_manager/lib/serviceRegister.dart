@@ -16,6 +16,7 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
   String? password;
   Object? args;
   String? routeLocation;
+  int count = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -202,6 +203,11 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
                   elevation: 15,
                 ),
                 onPressed: (() async{
+                  if (email == null || password == null || isSelectedItem == null) {
+                    return setState(() {
+                      count = 1;
+                    });
+                  }
                   await FirebaseFirestore.instance
                     .collection(routeLocation!)
                     .doc()
@@ -209,6 +215,20 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
                   Navigator.pushNamed(context, '/list', arguments: routeLocation as String);
                 }),
                 child: const Text('登録')
+              ),
+            ),
+            Visibility(
+              visible: count == 1,
+              child: Container(
+                alignment: Alignment.center,
+                width: MediaQuery.of(context).size.width * 0.3,
+                height: 50,
+                child: const Text(
+                  '記入していない欄があります',
+                  style: TextStyle(
+                    color: Colors.red,
+                  ),
+                  )
               ),
             ),
           ],
