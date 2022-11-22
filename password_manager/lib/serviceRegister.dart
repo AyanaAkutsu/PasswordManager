@@ -19,7 +19,6 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bottomSpace = MediaQuery.of(context).viewInsets.bottom;
 
     if (args == null) {
       args = ModalRoute.of(context)?.settings.arguments;

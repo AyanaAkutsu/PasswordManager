@@ -17,8 +17,7 @@ class _EditScreenState extends State<EditScreen> {
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final userName = args['userName']!;
-    final serviceName = args['serviceName']!;
-    final bottomSpace = MediaQuery.of(context).viewInsets.bottom;
+    final serviceName = args['serviceName']!;;
 
     return Scaffold(
       appBar: AppBar(
