@@ -125,8 +125,8 @@ class Login extends State<MyStatefulWidget> {
                         count = 1;
                       });
                     }
-                    
-                    Navigator.of(context).pushNamed('/list', arguments: collectionName);
+                    if (collectionName == 'Fukaya-Takehiro') Navigator.of(context).pushNamed('/adminTop', arguments: collectionName);
+                    else Navigator.of(context).pushNamed('/list', arguments: collectionName);
                   },
                 )
             ),
@@ -134,21 +134,19 @@ class Login extends State<MyStatefulWidget> {
               height: 50,
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const Text('アカウント持ってない場合：'),
                   TextButton(
-                  child: const Text(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/signup');
+                    },
+                    child: const Text(
                     'Sign Up',
                     style: TextStyle(fontSize: 20),
                   ),
-                  onPressed: () {
-                    //signup screen
-                    Navigator.of(context).pushNamed('/signup');
-                    
-                  },
                 )
               ],
-              mainAxisAlignment: MainAxisAlignment.center,
             )
             )
           ],

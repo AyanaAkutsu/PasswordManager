@@ -15,7 +15,7 @@ class _AdminScreenState extends State<AdminScreen> {
 
   List destination = [
     '/userList',
-    '/adminTop', //サインアップ画面が完成したらここをサインアップ画面にする
+    '/signup', 
     '/list',
   ];
 
@@ -24,11 +24,16 @@ class _AdminScreenState extends State<AdminScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('Admin Top'),
+
+        automaticallyImplyLeading: false,
 
         actions: [
           ElevatedButton(
-            onPressed: () => {}, //ログイン画面に遷移する
+            onPressed: () => {
+              Navigator.of(context).pushNamed('/')
+            }, //ログイン画面に遷移する
             child: const Text(
               "ログアウト"
             ),
@@ -69,7 +74,7 @@ class _AdminScreenState extends State<AdminScreen> {
                     elevation: 15,
                   ),
                   onPressed: (() {
-                    Navigator.of(context).pushNamed(destination[index], arguments: 'Sato-Jin');
+                    Navigator.of(context).pushNamed(destination[index], arguments: 'Fukaya-Takehiro');
                   })
                 ),
               );

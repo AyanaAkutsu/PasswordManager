@@ -1,19 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
-
+ 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+
+  String? userName;
+  String? password;
+  int count = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body : Padding(
-        padding: const EdgeInsets.all(10),
-        child: ListView(
+      body :  ListView(
           children: <Widget>[
             Container(
                 alignment: Alignment.center,
@@ -27,8 +31,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 )),
             Container(
                 padding: const  EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextFormField(
+                onChanged: (value) => userName = value,
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'ユーザー名',
                 ),
@@ -36,45 +41,72 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             Container(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child:  const TextField(
-                obscureText: true,
-                decoration: InputDecoration(
+              child:  TextFormField(
+                onChanged: (value) => password = value,
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'パスワード',
+                  hintText: 'パスワード',
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20)
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: const TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'パスワードの確認',
-                ),
-              ),
-            ),
+
             Container(
                 height: 20,
             ),
+
 
             Container(
                 height: 50,
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: ElevatedButton(
-                  child: const Text('サインアップ'),
-                  onPressed: () {
-                   Navigator.pop(context);
+                  onPressed:   () {
+                    if (userName == null || password == null) {
+                      return setState(() {
+                        count = 1;
+                      });
+                    }
+                    createUser(name: userName!, password: password!);
+                    Navigator.of(context).pushNamed('/');
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 44, 7, 74),
+                    primary: const Color.fromARGB(255, 44, 7, 74),
                   ),
-                  
+                  child: const Text('サインアップ'),
                 )
             ),
-            
+
+            Visibility(
+              visible: count == 1,
+              child: Container(
+                alignment: Alignment.center,
+                width: MediaQuery.of(context).size.width * 0.3,
+                height: 50,
+                child: const Text(
+                  'ユーザー名かパスワードが入力されていません',
+                  style: TextStyle(
+                    color: Colors.red,
+                  ),
+                  )
+              ),
+            ),
+          
           ],
-        )));
- 
+        ));
+  
+  
   }
+
+
+}
+
+Future<void> createUser({required String name, required String password}) async{
+  final json = {
+    'name': name,
+    'password': password,
+    'collectionName': name,
+  };
+
+  await FirebaseFirestore.instance.collection('user-list').doc().set(json);
+  
 }

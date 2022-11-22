@@ -23,11 +23,16 @@ class _ListScreenState extends State<ListScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('Service List'),
+
+        automaticallyImplyLeading: false,
 
         actions: [
           ElevatedButton(
-            onPressed: () => {}, //ログイン画面に遷移する
+            onPressed: () => {
+              Navigator.of(context).pushNamed('/')
+            }, //ログイン画面に遷移する
             child: const Text(
               "ログアウト"
             ),
@@ -84,7 +89,7 @@ class _ListScreenState extends State<ListScreen> {
                             Container(
                               alignment: Alignment.centerLeft,
                               height: 100,
-                              width: MediaQuery.of(context).size.width * 0.4,
+                              width: MediaQuery.of(context).size.width * 0.7,
                               padding: const EdgeInsets.only(left: 35),
                               child: Text(
                                 serviceList[index],
@@ -96,7 +101,7 @@ class _ListScreenState extends State<ListScreen> {
                             Container(
                               alignment: Alignment.centerRight,
                               height: 100,
-                              width: MediaQuery.of(context).size.width * 0.6,
+                              width: MediaQuery.of(context).size.width * 0.3,
                               padding: const EdgeInsets.only(right: 25),
                               child: IconButton(
                                 icon: const Icon(Icons.arrow_forward_ios),
@@ -105,7 +110,7 @@ class _ListScreenState extends State<ListScreen> {
                                   final docSnapshot = getDocument.docs.toList();
                                   final email = docSnapshot[0].get('email') as String;
                                   final password = docSnapshot[0].get('password')as String;
-                                  Navigator.of(context).pushNamed( '/view', arguments: {"service": serviceList[index], "email": email, "password": password});
+                                  Navigator.of(context).pushNamed( '/view', arguments: {'userName': routeLocation, "service": serviceList[index], "email": email, "password": password});
                                 })
                               ),
                             ),
@@ -117,22 +122,22 @@ class _ListScreenState extends State<ListScreen> {
                 }
                 )
             ),
-            //ここは管理者画面から来た場合のみ表示
+            //ここは管理者画面から来た場合のみ表示(未実装)
             Visibility(
-              visible: routeLocation == 'userList',
+              visible: false,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.3,
                 height: 50,
                 child: ElevatedButton(
-                  child: const Text('ユーザー削除'),
                   style: ElevatedButton.styleFrom(
                     primary: Colors.red.withOpacity(0.8),
                     onPrimary: Colors.white,
                     elevation: 15,
                   ),
                   onPressed: (() {
-                    //ここに確認画面へとぶ処理を記述
-                  })
+                    
+                  }),
+                  child: const Text('ユーザー削除')
                 ),
               ),
             )
