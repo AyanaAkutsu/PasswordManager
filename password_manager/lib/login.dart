@@ -1,31 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:password_manager/adminTop.dart';
-import 'package:password_manager/screens/forgotpassword.dart';
-import 'package:password_manager/screens/signup.dart';
-
-
- 
-
- 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
- 
-  static const String _title = 'Password Manager';
- 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-    
-      home: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(_title)),
-        body: const MyStatefulWidget(),
-      ),
-    );
-  }
-}
+import 'package:cloud_firestore/cloud_firestore.dart';
  
 class MyStatefulWidget extends StatefulWidget {
   const MyStatefulWidget({Key? key}) : super(key: key);
@@ -36,10 +10,22 @@ class MyStatefulWidget extends StatefulWidget {
  
 class Login extends State<MyStatefulWidget> {
 
- bool _isvisible = false;
+  String? userName;
+  String? password;
+  int count = 0;
+  bool _isvisible = false;
+  static const String _title = 'Password Manager';
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return MaterialApp(
+      title: _title,
+    
+      home: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text(_title)),
+        body: Padding(
         padding: const EdgeInsets.all(10),
         child: ListView(
           children: <Widget>[
@@ -67,10 +53,12 @@ class Login extends State<MyStatefulWidget> {
                   border: OutlineInputBorder(),
                   labelText: 'ユーザー名',
                 ),
+                onChanged: (value) => userName = value,
               ),
             ),
             Container(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              margin: const EdgeInsets.only(bottom: 10),
               child: TextFormField(
                 obscureText: !_isvisible,
                 decoration:  InputDecoration(
@@ -84,24 +72,61 @@ class Login extends State<MyStatefulWidget> {
                   ),
                   border: OutlineInputBorder(),
                   labelText: 'パスワード',
-              
-                ),
+              ),
+              onChanged: (value) => password = value,
+              ),
+            ),
+            Visibility(
+              visible: count == 1,
+              child: Container(
+                alignment: Alignment.center,
+                width: MediaQuery.of(context).size.width * 0.3,
+                height: 50,
+                child: const Text(
+                  'ユーザー名かパスワードが間違っています',
+                  style: TextStyle(
+                    color: Colors.red,
+                  ),
+                  )
               ),
             ),
             TextButton(
               onPressed: () {
                 //forgot password screen
-                 Navigator.push(context, MaterialPageRoute(builder: (context)=> ForgotPassword()));
+                 Navigator.of(context).pushNamed('/forgotPassword');
               },
               child: const Text('パスワードを忘れた?'),
             ),
             Container(
                 height: 50,
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                margin: const EdgeInsets.only(top: 20, bottom: 20),
                 child: ElevatedButton(
                   child: const Text('ログイン'),
-                  onPressed: () {
-                   Navigator.push(context, MaterialPageRoute(builder: (context)=> AdminScreen(title: 'Admin Screen')) );
+                  onPressed: () async{
+
+                    final querySnap = await FirebaseFirestore.instance
+                      .collection('user-list')
+                      .where('name', isEqualTo: userName)
+                      .get();
+                    
+                    if (querySnap.size == 0) {
+                      return setState(() {
+                        count = 1;
+                      });
+                    }
+
+                    final docQuerySnap = querySnap.docs.toList();
+                    final checkPassword = docQuerySnap[0].get('password');
+                    final collectionName = docQuerySnap[0].get('collectionName');
+                    
+                    if (checkPassword != password) {
+                      return setState(() {
+                        count = 1;
+                      });
+                    }
+                    
+                    Navigator.of(context).pushNamed('/list', arguments: collectionName);
                   },
                 )
             ),
@@ -118,7 +143,7 @@ class Login extends State<MyStatefulWidget> {
                   ),
                   onPressed: () {
                     //signup screen
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> SignUpPage()));
+                    Navigator.of(context).pushNamed('/signup');
                     
                   },
                 )
@@ -127,6 +152,9 @@ class Login extends State<MyStatefulWidget> {
             )
             )
           ],
-        ));
+        ))
+      ),
+    );
   }
-}
+  
+  }

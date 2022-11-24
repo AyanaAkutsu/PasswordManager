@@ -1,6 +1,6 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserListScreen extends StatefulWidget {
   const UserListScreen({Key? key, required String title}) : super(key: key);
@@ -9,20 +9,6 @@ class UserListScreen extends StatefulWidget {
 }
 
 class _UserListScreenState extends State<UserListScreen> {
-
-  List user = [
-    '佐藤　迅',
-    '山田　太郎',
-    '田中　太郎',
-    '鈴木　太郎',
-    '後藤　太郎',
-    '山崎　太郎',
-    '三島　太郎',
-    '浜崎　太郎',
-  ];
-
-
-
   @override
   Widget build(BuildContext context) {
 
@@ -51,42 +37,63 @@ class _UserListScreenState extends State<UserListScreen> {
         ],
       ),
       body: Center(
-        child: ListView.builder(
-          itemCount: user.length,
-          itemBuilder: (BuildContext context, int index) {
-          return Container(
-            height: 100,
-            width: MediaQuery.of(context).size.width * 1,
-            color: Colors.grey.withOpacity(0.1),
-            margin: EdgeInsets.only(top: 10),
-            child: Row(
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  height: 100,
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  child: Text(
-                    user[index],
-                    style: TextStyle(fontSize: 30,),
-                  ),
-                ),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.4,),
-                Container(
-                  alignment: Alignment.center,
-                  height: 100,
-                  width: 10,
-                  child: IconButton(
-                    icon: Icon(Icons.arrow_forward_ios),
-                    onPressed: (() {
-                      Navigator.pushNamed(context, '/list', arguments: 'userList');
-                    })
-                  ),
-                ),
-              ],
-            )
-          );
-          },
-        ),
+        child: StreamBuilder<QuerySnapshot> (
+          stream: FirebaseFirestore.instance
+            .collection('user-list')
+            .orderBy('user-name')
+            .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Text('エラーが発生しました');
+            }
+            if (!snapshot.hasData){
+              return const Center(child: CircularProgressIndicator(),);
+            }
+            final userList = snapshot.requireData.docs
+              .map<String> ((DocumentSnapshot document) {
+                final documentData = document.data()! as Map<String, dynamic>;
+                return documentData['user-name']! as String;
+            }).toList();
+
+            return ListView.builder(
+              itemCount: userList.length,
+              itemBuilder: (BuildContext context, int index) {
+              return Container(
+                height: 100,
+                width: MediaQuery.of(context).size.width * 1,
+                color: Colors.grey.withOpacity(0.1),
+                margin: const EdgeInsets.only(top: 10),
+                child: Row(
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      height: 100,
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      padding: const EdgeInsets.only(left: 35),
+                      child: Text(
+                        userList[index],
+                        style: const TextStyle(fontSize: 30,),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.centerRight,
+                      height: 100,
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      padding: const EdgeInsets.only(right: 25),
+                      child: IconButton(
+                        icon: const Icon(Icons.arrow_forward_ios),
+                        onPressed: (() {
+                          Navigator.pushNamed(context, '/list', arguments: 'userList');
+                        })
+                      ),
+                    ),
+                  ],
+                )
+              );
+              },
+            );
+          }
+        )
       ), 
     );
   }

@@ -16,22 +16,40 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    final cnamecontroller = TextEditingController();
     final namecontroller = TextEditingController();
     final passwordcontroller = TextEditingController();
 
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+    iconTheme: IconThemeData(
+      color: Colors.white, //change your color here
+    ),
+    automaticallyImplyLeading: true,
+    title: Text('Sign Up'),
+    leading: IconButton(icon:Icon(Icons.arrow_back),
+      onPressed:() => Navigator.pop(context, false),
+    )
+),
       body :  ListView(
           children: <Widget>[
-            Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(10),
-                child: const Text(
-                  'Sign Up',
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 44, 7, 74),
-                      fontWeight: FontWeight.w500,
-                      fontSize: 30),
-                )),
+            
+                  Container(
+                padding: const  EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: TextFormField(
+                controller: cnamecontroller,
+                // ignore: prefer_const_constructors
+                decoration: InputDecoration(
+                  // ignore: prefer_const_constructors
+                
+                  border: OutlineInputBorder(),
+                  labelText: '姓-名',
+                 
+                ),
+                  
+              ),
+            ),
             Container(
                 padding: const  EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: TextFormField(
@@ -76,15 +94,14 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: ElevatedButton(
                   child: const Text('サインアップ'),
                   onPressed:   () {
+                   final cname = cnamecontroller.text;
                    final name = namecontroller.text;
                    final password = passwordcontroller.text;
-                   createUser(name:name, password:password);
+                   createUser(cname:cname,name:name, password:password);
     
                    Navigator.pop(context);
                   },
-                  style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 44, 7, 74),
-                  ),
+                  
                   
                 )
             ),
@@ -98,11 +115,12 @@ class _SignUpPageState extends State<SignUpPage> {
 
 }
 
-Future createUser({required String name, required String password}) async{
+Future createUser({required String name, required String password, required String cname}) async{
   final docUser = FirebaseFirestore.instance.collection('user-list').doc();
   
   final json = {
-    'user-name': name,
+    'collectionName': cname,
+    'name': name,
     'password': password
   };
   await docUser.set(json);

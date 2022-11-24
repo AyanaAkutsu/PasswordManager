@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:password_manager/edit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:password_manager/screens/forgotpassword.dart';
 import 'firebase_options.dart';
 import 'package:password_manager/login.dart';
 import 'package:password_manager/serviceRegister.dart';
@@ -33,14 +34,15 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/':(BuildContext context) => LoginPage(),//ログイン画面が完成したらここをログイン画面にする 
+        '/':(BuildContext context) => MyStatefulWidget(),
         '/edit': (BuildContext context) => EditScreen(title: 'Edit Screen'),
         '/serviceRegister': (BuildContext context) => ServiceRegisterScreen(),
-        '/view': (BuildContext context) => ViewScreenState(title: 'View Screen'),
+        '/view': (BuildContext context) => ViewScreenState(title: 'View Screen',),
         '/list':(BuildContext context) => ListScreen(title: 'Service List'),
         '/userList':(BuildContext context) => UserListScreen(title: 'User List'),
         '/adminTop':(BuildContext context) => AdminScreen(title: 'Admin Top'),
         '/signup' :(BuildContext context) => SignUpPage(),
+        '/forgotPassword': (BuildContext context) => ForgotPassword(),
       },
     );
   }

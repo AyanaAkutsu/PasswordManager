@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+// import 'package:flutter/rendering.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -17,21 +17,12 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
   String? password;
   Object? args;
   String? routeLocation;
-  int? count;
-
-  List<DocumentSnapshot> docList = [];
 
   @override
   Widget build(BuildContext context) {
     if (args == null) {
       args = ModalRoute.of(context)?.settings.arguments;
       routeLocation = args as String;
-    }
-
-    void getSnapshot () async{
-      final snapshot = await FirebaseFirestore.instance.collection('service-list').get();
-      docList = snapshot.docs;
-      count = docList.length;
     }
     
     return Scaffold(
@@ -41,12 +32,8 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
         actions: [
           ElevatedButton(
             onPressed: () => {}, //ログイン画面に遷移する
-            child: const Text(
-              "ログアウト"
-            ),
-
             style: ElevatedButton.styleFrom(
-              textStyle: TextStyle(
+              textStyle: const TextStyle(
                 fontSize: 20,
               ),
               primary: Colors.lightBlue,
@@ -54,6 +41,9 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
                 color: Colors.white,
                 width: 2
               )
+            ), 
+            child: const Text(
+              'ログアウト',
             ),
           )
         ],
@@ -64,7 +54,7 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
            Container(
               alignment: Alignment.centerLeft,
               child: const Text(
-                "サービス名：",
+                'サービス名 :',
                 style: TextStyle(
                 fontWeight: FontWeight.bold,
                   fontSize: 24,
@@ -75,28 +65,48 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
               width: double.infinity,
               height: 50,
               alignment: Alignment.center,
-              child: DropdownButton(
-                items: docList.map<DropdownMenuItem<String>> ((document) {
-                  return DropdownMenuItem<String> (
-                    child: Text(document['service-name']),
-                  );
-                }).toList(),
-                onChanged: (String? value) {
-                  setState(() {
-                    isSelectedItem = value;
-                  });
+              child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                  .collection('service-list')
+                  .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return const Text('エラーが発生しました');
+                  }
+                  if (!snapshot.hasData){
+                    return const Center(child: CircularProgressIndicator(),);
+                  }
+                  final lists = snapshot.requireData.docs
+                    .map<String> ((DocumentSnapshot document) {
+                      final documentData = document.data()! as Map<String, dynamic>;
+                      return documentData['service-name']! as String;
+                  }).toList();
+
+                    return SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      height: 50,
+                      child: DropdownButton<String>(
+                        value: isSelectedItem,
+                        items: lists
+                        .map((String list) =>
+                          DropdownMenuItem(value: list, child: Text(
+                            list,
+                            style: TextStyle(color: Colors.black),)))
+                        .toList(),
+                        onChanged: (String? value) {
+                          setState(() {
+                            isSelectedItem = value;
+                          });
+                        },
+                        style: const TextStyle(
+                          fontSize: 25,
+                        ),
+                      )
+                    );
                 },
-                value: isSelectedItem,
-                style: const TextStyle(
-                  fontSize: 30,
-                ),
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(width: 1, color: Colors.blue)
-              ),
+                )
             ),
-            Container(
+            const SizedBox(
               width: double.infinity,
               height: 80,
             ),
@@ -114,18 +124,18 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
               width: double.infinity,
               height: 50,
               alignment: Alignment.center,
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Enter your Email address',
-                ),
-                onChanged: ((Text) => email),
-              ),
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(width: 1, color: Colors.blue)
               ),
+              child: TextField(
+                decoration: const InputDecoration(
+                  hintText: 'Enter your Email address',
+                ),
+                onChanged: (Text) => email = Text,
+              ),
             ),
-            Container(
+            const SizedBox(
               width: double.infinity,
               height: 80,
             ),
@@ -142,32 +152,36 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
             Container(
               width: double.infinity,
               height: 50,
-              margin: EdgeInsets.only(bottom: 30),
+              margin: const EdgeInsets.only(bottom: 30),
               alignment: Alignment.center,
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Enter your password',
-                ),
-                onChanged: (Text) => password,
-              ),
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(width: 1, color: Colors.blue)
+              ),
+              child: TextField(
+                decoration: const InputDecoration(
+                  hintText: 'Enter your password',
+                ),
+                onChanged: (Text) => password = Text,
               ),
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.15,
               height: 50,
               child: ElevatedButton(
-                child: const Text('登録'),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.blue,
                   onPrimary: Colors.white,
                   elevation: 15,
                 ),
-                onPressed: (() {
+                onPressed: (() async{
+                  await FirebaseFirestore.instance
+                    .collection('Sato-Jin')
+                    .doc()
+                    .set({'service-name': isSelectedItem, 'email': email, 'password': password});
                   Navigator.pushNamed(context, '/list', arguments: routeLocation as String);
-                })
+                }),
+                child: const Text('登録')
               ),
             ),
           ],
