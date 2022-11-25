@@ -18,22 +18,20 @@ class _ForgotPass extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold (
-  
+        appBar: AppBar(
+        
+        centerTitle: true,
+    iconTheme: IconThemeData(
+      color: Colors.white, //change your color here
+    ),
+    automaticallyImplyLeading: true,
+    title: Text('パスワードのリセット'),
+    leading: IconButton(icon:Icon(Icons.arrow_back),
+      onPressed:() => Navigator.pop(context, false),
+    )
+),
         body: ListView(
           children: <Widget>[
-
-     
-
-            Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(10),
-                child: const Text(
-                  'パスワードのリセット',
-                  style: TextStyle(
-                      color: Colors.black45,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 30),
-                )),
 
              Container(           
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -81,13 +79,15 @@ class _ForgotPass extends State<ForgotPassword> {
 
                   
                   onPressed: () async{
+
+
                     final querySnapshot = await FirebaseFirestore.instance
                       .collection('user-list')
                       .where('name', isEqualTo: userName)
                       .get();
                     final docUsers = querySnapshot.docs.toList();
 
-                    if (querySnapshot.size == 0 || password1 != password2) {
+                    if (userName == null || querySnapshot.size == 0 || password1 != password2) {
                       return setState(() {
                         count = 1;
                       });
@@ -96,9 +96,7 @@ class _ForgotPass extends State<ForgotPassword> {
                     }
                     Navigator.of(context).pushNamed('/');
                   },
-                  style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 74, 73, 7),
-                  ),
+                  
 
                    child: const Text('パスワードをリセットする'),
                   
