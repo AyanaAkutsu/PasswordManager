@@ -18,9 +18,12 @@ class _ForgotPass extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold (
-    
+  
         body: ListView(
           children: <Widget>[
+
+     
+
             Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(10),
@@ -43,6 +46,7 @@ class _ForgotPass extends State<ForgotPassword> {
                 
               ),
             ),
+
 
             Container(           
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -74,6 +78,8 @@ class _ForgotPass extends State<ForgotPassword> {
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: ElevatedButton(
                 
+
+                  
                   onPressed: () async{
                     final querySnapshot = await FirebaseFirestore.instance
                       .collection('user-list')
@@ -93,6 +99,7 @@ class _ForgotPass extends State<ForgotPassword> {
                   style: ElevatedButton.styleFrom(
                     //primary: Color.fromARGB(255, 74, 73, 7),
                   ),
+
                    child: const Text('パスワードをリセットする'),
                   
                 )

@@ -80,8 +80,13 @@ class _UserListScreenState extends State<UserListScreen> {
             }
             final userList = snapshot.requireData.docs
               .map<String> ((DocumentSnapshot document) {
-                final documentData = document.data()! as Map<String, dynamic>;
-                return documentData['name']! as String;
+
+                final documentData = document.data! as Map<String, dynamic>;
+                return documentData['user-name']! as String;
+
+                
+             
+
             }).toList();
 
             return ListView.builder(
