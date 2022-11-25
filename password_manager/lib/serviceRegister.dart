@@ -78,7 +78,7 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
                   }
                   final lists = snapshot.requireData.docs
                     .map<String> ((DocumentSnapshot document) {
-                      final documentData = document.data()! as Map<String, dynamic>;
+                      final documentData = document.data! as Map<String, dynamic>;
                       return documentData['service-name']! as String;
                   }).toList();
 

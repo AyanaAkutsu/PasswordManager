@@ -16,12 +16,15 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    
     final cnamecontroller = TextEditingController();
     final namecontroller = TextEditingController();
     final passwordcontroller = TextEditingController();
 
     return Scaffold(
+      
       appBar: AppBar(
+        
         centerTitle: true,
     iconTheme: IconThemeData(
       color: Colors.white, //change your color here

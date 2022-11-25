@@ -66,7 +66,7 @@ class _ListScreenState extends State<ListScreen> {
                   }
                   final serviceList = snapshot.requireData.docs
                     .map<String> ((DocumentSnapshot document) {
-                      final documentData = document.data()! as Map<String, dynamic>;
+                      final documentData = document.data! as Map<String, dynamic>;
                       return documentData['service-name']! as String;
                   }).toList();
 
