@@ -1,4 +1,7 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -10,16 +13,14 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
 
-
-
+  int count = 0;
+  final cnamecontroller = TextEditingController();
+    final namecontroller = TextEditingController();
+    final passwordcontroller = TextEditingController();
 
 
   @override
   Widget build(BuildContext context) {
-    
-    final cnamecontroller = TextEditingController();
-    final namecontroller = TextEditingController();
-    final passwordcontroller = TextEditingController();
 
     return Scaffold(
       
@@ -87,6 +88,21 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             ),
 
+            Visibility(
+                visible: count == 1,
+                child: Container(
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  height: 50,
+                  child: const Text(
+                    '空欄が存在します',
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                    )
+                ),
+              ),
+
             Container(
                 height: 20,
             ),
@@ -101,6 +117,13 @@ class _SignUpPageState extends State<SignUpPage> {
                    final cname = cnamecontroller.text;
                    final name = namecontroller.text;
                    final password = passwordcontroller.text;
+                   
+                   if (name == '' || cname == '' || password == '') {
+                    return setState(() {
+                      count = 1;
+                    });
+                   }
+
                    createUser(cname:cname,name:name, password:password);
     
                    Navigator.pop(context);

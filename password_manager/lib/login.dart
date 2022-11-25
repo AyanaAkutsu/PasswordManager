@@ -109,7 +109,12 @@ class Login extends State<MyStatefulWidget> {
                     child: const Text('ログイン'),
                     onPressed: () async{
     
-                      
+                      if (userName == null) {
+                        return setState(() {
+                          count = 1;
+                        });
+                      }
+
                       final querySnap = await FirebaseFirestore.instance
                         .collection('user-list')
                         .where('name', isEqualTo: userName)
