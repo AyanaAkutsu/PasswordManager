@@ -12,20 +12,25 @@ class _EditScreenState extends State<EditScreen> {
   String? email;
   String? password;
   String? docId;
-
+  
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final userName = args['userName']!;
-    final serviceName = args['serviceName']!;
-    
+    final serviceName = args['serviceName']!;;
+
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text("Edit Screen"),
+
+        automaticallyImplyLeading: false,
 
         actions: [
           ElevatedButton(
-            onPressed: () => {}, //ログイン画面に遷移する
+            onPressed: () => {
+              Navigator.of(context).pushNamed('/')
+            }, //ログイン画面に遷移する
 
             style: ElevatedButton.styleFrom(
               textStyle: const TextStyle(
@@ -45,7 +50,8 @@ class _EditScreenState extends State<EditScreen> {
         
       ),
 
-      body: Center (
+      body: SingleChildScrollView (
+        reverse: true,
         child: StreamBuilder<QuerySnapshot> (
           stream: FirebaseFirestore.instance
             .collection(userName)
@@ -152,10 +158,10 @@ class _EditScreenState extends State<EditScreen> {
                     ),
                     onPressed: (() async{
                       await FirebaseFirestore.instance
-                        .collection('Sato-Jin')
+                        .collection(userName)
                         .doc(docId)
                         .set({'service-name': serviceName, 'email': email, 'password': password});
-                      Navigator.of(context).pushNamed('/view', arguments: {'userName': userName, 'serviceName': serviceName});
+                      Navigator.of(context).pushNamed('/view', arguments: {'userName': userName, "service": serviceName, "email": email, "password": password});
                     }),
                     child: const Text('確定')
                   ),

@@ -9,16 +9,45 @@ class UserListScreen extends StatefulWidget {
 }
 
 class _UserListScreenState extends State<UserListScreen> {
+
+  String? userName;
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
+        leading: Container(
+          child: ElevatedButton(
+            onPressed: () => {
+              Navigator.of(context).pushNamed('/adminTop')
+            }, 
+            child: const Text(
+              "戻る"
+            ),
+
+            style: ElevatedButton.styleFrom(
+              textStyle: TextStyle(
+                fontSize: 20,
+              ),
+              primary: Colors.lightBlue,
+              side: const BorderSide(
+                color: Colors.white,
+                width: 2
+              )
+            ),
+          ),
+        ),
+        centerTitle: true,
         title: const Text('User List'),
+
+        automaticallyImplyLeading: false,
 
         actions: [
           ElevatedButton(
-            onPressed: () => {}, //ログイン画面に遷移する
+            onPressed: () => {
+              Navigator.of(context).pushNamed('/')
+            }, //ログイン画面に遷移する
             child: const Text(
               "ログアウト"
             ),
@@ -40,7 +69,7 @@ class _UserListScreenState extends State<UserListScreen> {
         child: StreamBuilder<QuerySnapshot> (
           stream: FirebaseFirestore.instance
             .collection('user-list')
-            .orderBy('user-name')
+            .orderBy('name')
             .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
@@ -51,8 +80,13 @@ class _UserListScreenState extends State<UserListScreen> {
             }
             final userList = snapshot.requireData.docs
               .map<String> ((DocumentSnapshot document) {
+
                 final documentData = document.data! as Map<String, dynamic>;
                 return documentData['user-name']! as String;
+
+                
+             
+
             }).toList();
 
             return ListView.builder(
@@ -68,7 +102,7 @@ class _UserListScreenState extends State<UserListScreen> {
                     Container(
                       alignment: Alignment.centerLeft,
                       height: 100,
-                      width: MediaQuery.of(context).size.width * 0.5,
+                      width: MediaQuery.of(context).size.width * 0.6,
                       padding: const EdgeInsets.only(left: 35),
                       child: Text(
                         userList[index],
@@ -78,12 +112,18 @@ class _UserListScreenState extends State<UserListScreen> {
                     Container(
                       alignment: Alignment.centerRight,
                       height: 100,
-                      width: MediaQuery.of(context).size.width * 0.5,
+                      width: MediaQuery.of(context).size.width * 0.4,
                       padding: const EdgeInsets.only(right: 25),
                       child: IconButton(
                         icon: const Icon(Icons.arrow_forward_ios),
-                        onPressed: (() {
-                          Navigator.pushNamed(context, '/list', arguments: 'userList');
+                        onPressed: (() async {
+                          final querySnapshot = await FirebaseFirestore.instance
+                            .collection('user-list')
+                            .where('name', isEqualTo: userList[index])
+                            .get();
+                          final documents = querySnapshot.docs.toList();
+                          userName = documents[0].get('collectionName');
+                          Navigator.pushNamed(context, '/list', arguments: userName);
                         })
                       ),
                     ),
