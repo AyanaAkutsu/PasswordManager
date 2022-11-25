@@ -53,16 +53,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   
               ),
             ),
-            Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(10),
-                child: const Text(
-                  'Sign Up',
-                  style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 30),
-                )),
+            
             Container(
                 padding: const  EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: TextFormField(
