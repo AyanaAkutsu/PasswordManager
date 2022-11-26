@@ -17,16 +17,41 @@ class _EditScreenState extends State<EditScreen> {
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final userName = args['userName']!;
-    final serviceName = args['serviceName']!;;
+    final serviceName = args['serviceName']!;
 
     return Scaffold(
       appBar: AppBar(
+        //戻るボタンを設定しようとしましたが、遷移が上手くいかなかったため未実装です
+        // leading: Container(
+        //   child: ElevatedButton(
+        //     onPressed: () {
+        //       Navigator.of(context).pushNamed('/view', arguments: {'userName': userName, "service": serviceName, "email": email, "password": password});
+
+        //     }, 
+        //     child: const Text(
+        //       "戻る"
+        //     ),
+
+        //     style: ElevatedButton.styleFrom(
+        //       textStyle: TextStyle(
+        //         fontSize: 12,
+        //       ),
+        //       primary: Colors.lightBlue,
+        //       side: const BorderSide(
+        //         color: Colors.white,
+        //         width: 2
+        //       )
+        //     ),
+        //   ),
+        // ),
+
         centerTitle: true,
         title: const Text("Edit Screen"),
 
         automaticallyImplyLeading: false,
 
         actions: [
+          
           ElevatedButton(
             onPressed: () => {
               Navigator.of(context).pushNamed('/')

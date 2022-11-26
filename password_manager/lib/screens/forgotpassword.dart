@@ -18,6 +18,19 @@ class _ForgotPass extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold (
+
+      appBar: AppBar(
+        
+        centerTitle: true,
+        iconTheme: IconThemeData(
+          color: Colors.white, //change your color here
+        ),
+        automaticallyImplyLeading: true,
+        title: Text('パスワードのリセット'),
+          leading: IconButton(icon:Icon(Icons.arrow_back),
+          onPressed:() => Navigator.pop(context, false),
+        )
+      ),
   
         body: ListView(
           children: <Widget>[

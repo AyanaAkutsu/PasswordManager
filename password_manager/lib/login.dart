@@ -136,7 +136,7 @@ class Login extends State<MyStatefulWidget> {
                         });
                       }
                       if (collectionName == 'Fukaya-Takehiro') Navigator.of(context).pushNamed('/adminTop', arguments: collectionName);
-                      Navigator.of(context).pushNamed('/list', arguments: collectionName);
+                      else Navigator.of(context).pushNamed('/list', arguments: collectionName);
                     },
                   )
               ),

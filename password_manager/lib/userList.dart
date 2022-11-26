@@ -28,7 +28,7 @@ class _UserListScreenState extends State<UserListScreen> {
 
             style: ElevatedButton.styleFrom(
               textStyle: TextStyle(
-                fontSize: 20,
+                fontSize: 12,
               ),
               primary: Colors.lightBlue,
               side: const BorderSide(
