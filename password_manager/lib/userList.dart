@@ -81,8 +81,8 @@ class _UserListScreenState extends State<UserListScreen> {
             final userList = snapshot.requireData.docs
               .map<String> ((DocumentSnapshot document) {
 
-                final servicename = document.get('name');
-                return servicename as String;
+                final name = document.get('name');
+                return name as String;
 
                 
              
