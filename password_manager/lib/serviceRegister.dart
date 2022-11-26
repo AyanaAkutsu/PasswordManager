@@ -39,7 +39,7 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
 
             style: ElevatedButton.styleFrom(
               textStyle: TextStyle(
-                fontSize: 20,
+                fontSize: 12,
               ),
               primary: Colors.lightBlue,
               side: const BorderSide(
