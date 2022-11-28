@@ -39,7 +39,7 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
 
             style: ElevatedButton.styleFrom(
               textStyle: TextStyle(
-                fontSize: 20,
+                fontSize: 12,
               ),
               primary: Colors.lightBlue,
               side: const BorderSide(
@@ -106,8 +106,8 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
                   }
                   final lists = snapshot.requireData.docs
                     .map<String> ((DocumentSnapshot document) {
-                      final documentData = document.data! as Map<String, dynamic>;
-                      return documentData['service-name']! as String;
+                       final servicename = document.get('service-name');
+                      return servicename as String;
                   }).toList();
 
                     return SizedBox(

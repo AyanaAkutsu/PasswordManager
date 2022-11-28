@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -10,49 +11,49 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
 
-
-
+  int count = 0;
+  final cnamecontroller = TextEditingController();
+    final namecontroller = TextEditingController();
+    final passwordcontroller = TextEditingController();
 
 
   @override
   Widget build(BuildContext context) {
-    
-    final cnamecontroller = TextEditingController();
-    final namecontroller = TextEditingController();
-    final passwordcontroller = TextEditingController();
 
     return Scaffold(
       
       appBar: AppBar(
         
         centerTitle: true,
-    iconTheme: IconThemeData(
+    iconTheme: const IconThemeData(
       color: Colors.white, //change your color here
     ),
     automaticallyImplyLeading: true,
-    title: Text('Sign Up'),
-    leading: IconButton(icon:Icon(Icons.arrow_back),
+    title: const Text('Sign Up'),
+    leading: IconButton(icon:const Icon(Icons.arrow_back),
       onPressed:() => Navigator.pop(context, false),
     )
 ),
       body :  ListView(
           children: <Widget>[
-            
-                  Container(
-                padding: const  EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: TextFormField(
+
+                 Container(
+                padding: const  EdgeInsets.fromLTRB(10, 10, 10, 0),       
+              child: 
+              TextFormField(
                 controller: cnamecontroller,
                 // ignore: prefer_const_constructors
                 decoration: InputDecoration(
                   // ignore: prefer_const_constructors
                 
-                  border: OutlineInputBorder(),
-                  labelText: '姓-名',
-                 
+                  border: const OutlineInputBorder(),
+                  labelText: '姓-名(例：Akutsu-Ayana)',
+                  hintText: 'フルネーム(できればアルファベット　例：Akutsu-Ayana)を入力してください'
                 ),
                   
               ),
             ),
+            
             Container(
                 padding: const  EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: TextFormField(
@@ -61,8 +62,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 decoration: InputDecoration(
                   // ignore: prefer_const_constructors
                 
-                  border: OutlineInputBorder(),
-                  labelText: 'ユーザー名',
+                  border: const OutlineInputBorder(),
+                  labelText: 'ユーザー名（漢字・フリガナ・アルファベット）',
+                  hintText: 'ユーザー名（漢字・フリガナ・アルファベット）を作成してください' 
                  
                 ),
                   
@@ -79,12 +81,28 @@ class _SignUpPageState extends State<SignUpPage> {
                   
                   // ignore: prefer_const_constructors
                   border: OutlineInputBorder(),
-                  hintText: 'パスワード',
-                  contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20)
+                  labelText: 'パスワード（漢字・フリガナ・アルファベット）',
+                  hintText: 'パスワード（漢字・フリガナ・アルファベット）を作成してください',
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20)
                 ),
           
             ),
             ),
+
+            Visibility(
+                visible: count == 1,
+                child: Container(
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  height: 50,
+                  child: const Text(
+                    '空欄が存在します',
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                    )
+                ),
+              ),
 
             Container(
                 height: 20,
@@ -100,12 +118,17 @@ class _SignUpPageState extends State<SignUpPage> {
                    final cname = cnamecontroller.text;
                    final name = namecontroller.text;
                    final password = passwordcontroller.text;
+                   
+                   if (name == '' || cname == '' || password == '') {
+                    return setState(() {
+                      count = 1;
+                    });
+                   }
+
                    createUser(cname:cname,name:name, password:password);
     
                    Navigator.pop(context);
                   },
-                  
-                  
                 )
             ),
           
