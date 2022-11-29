@@ -14,16 +14,18 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
   String? isSelectedItem;
   String? email;
   String? password;
-  Object? args;
+  Map<String, dynamic>? args;
   String? routeLocation;
   int count = 0;
+  int adminCheck = 0;
 
   @override
   Widget build(BuildContext context) {
 
     if (args == null) {
-      args = ModalRoute.of(context)?.settings.arguments;
-      routeLocation = args as String;
+      args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      routeLocation = args?['user'] as String;
+      adminCheck = args?['adminCheck'] as int;
     }
     
     return Scaffold(
@@ -31,7 +33,7 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
         leading: Container(
           child: ElevatedButton(
             onPressed: () => {
-              Navigator.of(context).pushNamed('/list', arguments: routeLocation)
+              Navigator.of(context).pushNamed('/list', arguments: {'user': routeLocation, 'adminCheck': adminCheck})
             }, 
             child: const Text(
               "戻る"
@@ -111,7 +113,7 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
                   }).toList();
 
                     return SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.3,
+                      width: MediaQuery.of(context).size.width * 0.4,
                       height: 50,
                       child: DropdownButton<String>(
                         value: isSelectedItem,
@@ -194,7 +196,7 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
               ),
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.15,
+              width: MediaQuery.of(context).size.width * 0.3,
               height: 50,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -212,7 +214,7 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
                     .collection(routeLocation!)
                     .doc()
                     .set({'service-name': isSelectedItem, 'email': email, 'password': password});
-                  Navigator.pushNamed(context, '/list', arguments: routeLocation as String);
+                  Navigator.pushNamed(context, '/list', arguments: {'user': routeLocation, 'adminCheck': adminCheck});
                 }),
                 child: const Text('登録')
               ),
@@ -221,7 +223,7 @@ class _ServiceRegisterScreenState extends State<ServiceRegisterScreen> {
               visible: count == 1,
               child: Container(
                 alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width * 0.3,
+                width: MediaQuery.of(context).size.width * 1,
                 height: 50,
                 child: const Text(
                   '記入していない欄があります',

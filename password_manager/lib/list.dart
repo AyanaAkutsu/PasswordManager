@@ -10,19 +10,72 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
-  Object? args;
-  String? routeLocation;
+  _myDialog (String user) {
+    int count = 0;
+    showDialog (
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          title: const Text('警告'),
+          content: const Text('本当にユーザーを削除しますか？'),
+          actions: <Widget>[
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () async{
+                final querySnap1 = await FirebaseFirestore.instance.collection(user).get();
+                final querySnap2 = await FirebaseFirestore.instance.collection('user-list').where('collectionName', isEqualTo: user).get();
+                for (int i = 0; i < querySnap1.size; i++) {
+                  FirebaseFirestore.instance.collection(user).doc(querySnap1.docs[i].id).delete();
+                }
+                FirebaseFirestore.instance.collection('user-list').doc(querySnap2.docs[0].id).delete();
+                Navigator.popUntil(context, (route) => count++ >= 2);
+              },
+              child: const Text('Yes'),
+            )
+          ],
+      );
+      },
+    );
+  }
   
 
   @override
   Widget build(BuildContext context) {
-    if (args == null) {
-      args = ModalRoute.of(context)?.settings.arguments;
-      routeLocation = args as String;
-    }
+      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      final routeLocation = args['user'] as String;
+      final adminCheck = args['adminCheck'] as int;
+      
+
 
     return Scaffold(
       appBar: AppBar(
+        leading: Visibility(
+          visible: routeLocation == 'fukaya',
+          child: Container(
+            child: ElevatedButton(
+              onPressed: () => {
+                Navigator.of(context).pushNamed('/adminTop')
+              }, 
+              child: const Text(
+                "戻る"
+              ),
+        
+              style: ElevatedButton.styleFrom(
+                textStyle: TextStyle(
+                  fontSize: 12,
+                ),
+                primary: Colors.lightBlue,
+                side: const BorderSide(
+                  color: Colors.white,
+                  width: 2
+                )
+              ),
+            ),
+          ),
+        ),
         centerTitle: true,
         title: const Text('Service List'),
 
@@ -59,7 +112,7 @@ class _ListScreenState extends State<ListScreen> {
               margin: const EdgeInsets.only(top: 10, bottom: 10),
               child: StreamBuilder<QuerySnapshot> (
                 stream: FirebaseFirestore.instance
-                  .collection(routeLocation!)
+                  .collection(routeLocation)
                   .orderBy('service-name')
                   .snapshots(),
                 builder: (context, snapshot) {
@@ -106,11 +159,11 @@ class _ListScreenState extends State<ListScreen> {
                               child: IconButton(
                                 icon: const Icon(Icons.arrow_forward_ios),
                                 onPressed: (() async{
-                                  final getDocument = await FirebaseFirestore.instance.collection(routeLocation!).where('service-name', isEqualTo: serviceList[index]).get();
+                                  final getDocument = await FirebaseFirestore.instance.collection(routeLocation).where('service-name', isEqualTo: serviceList[index]).get();
                                   final docSnapshot = getDocument.docs.toList();
                                   final email = docSnapshot[0].get('email') as String;
                                   final password = docSnapshot[0].get('password')as String;
-                                  Navigator.of(context).pushNamed( '/view', arguments: {'userName': routeLocation, "service": serviceList[index], "email": email, "password": password});
+                                  Navigator.of(context).pushNamed( '/view', arguments: {'userName': routeLocation, "service": serviceList[index], "email": email, "password": password, "adminCheck": adminCheck});
                                 })
                               ),
                             ),
@@ -122,9 +175,9 @@ class _ListScreenState extends State<ListScreen> {
                 }
                 )
             ),
-            //ここは管理者画面から来た場合のみ表示(未実装)
+            //ここは管理者画面から来た場合のみ表示
             Visibility(
-              visible: false,
+              visible: adminCheck == 1,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.3,
                 height: 50,
@@ -135,7 +188,7 @@ class _ListScreenState extends State<ListScreen> {
                     elevation: 15,
                   ),
                   onPressed: (() {
-                    
+                    _myDialog(routeLocation);
                   }),
                   child: const Text('ユーザー削除')
                 ),
@@ -146,7 +199,7 @@ class _ListScreenState extends State<ListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: ((){
-          Navigator.pushNamed(context, '/serviceRegister',arguments: routeLocation as String);
+          Navigator.pushNamed(context, '/serviceRegister',arguments: {'user': routeLocation, 'adminCheck': adminCheck});
         }),
         tooltip: 'サービスを追加',
         child: const Icon(Icons.add),

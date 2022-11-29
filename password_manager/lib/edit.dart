@@ -18,6 +18,7 @@ class _EditScreenState extends State<EditScreen> {
     final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final userName = args['userName']!;
     final serviceName = args['serviceName']!;
+    final adminCheck = args['adminCheck'];
 
     return Scaffold(
       appBar: AppBar(
@@ -173,7 +174,7 @@ class _EditScreenState extends State<EditScreen> {
                 ),
 
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.15,
+                  width: MediaQuery.of(context).size.width * 0.3,
                   height: 50,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -186,7 +187,7 @@ class _EditScreenState extends State<EditScreen> {
                         .collection(userName)
                         .doc(docId)
                         .set({'service-name': serviceName, 'email': email, 'password': password});
-                      Navigator.of(context).pushNamed('/view', arguments: {'userName': userName, "service": serviceName, "email": email, "password": password});
+                      Navigator.of(context).pushNamed('/view', arguments: {'userName': userName, "service": serviceName, "email": email, "password": password, 'adminCheck': adminCheck});
                     }),
                     child: const Text('確定')
                   ),
