@@ -123,7 +123,7 @@ class _UserListScreenState extends State<UserListScreen> {
                             .get();
                           final documents = querySnapshot.docs.toList();
                           userName = documents[0].get('collectionName');
-                          Navigator.pushNamed(context, '/list', arguments: userName);
+                          Navigator.pushNamed(context, '/list', arguments: {'user': userName, 'adminCheck': 1});
                         })
                       ),
                     ),

@@ -48,7 +48,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 
                   border: const OutlineInputBorder(),
                   labelText: '姓-名(例：Akutsu-Ayana)',
-                  hintText: 'フルネーム(できればアルファベット　例：Akutsu-Ayana)を入力してください'
+                  hintText: 'フルネーム(アルファベット　例：Akutsu-Ayana)を入力してください'
                 ),
                   
               ),
@@ -63,8 +63,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   // ignore: prefer_const_constructors
                 
                   border: const OutlineInputBorder(),
-                  labelText: 'ユーザー名（漢字・フリガナ・アルファベット）',
-                  hintText: 'ユーザー名（漢字・フリガナ・アルファベット）を作成してください' 
+                  labelText: 'ユーザー名（漢字）',
+                  hintText: 'ユーザー名（漢字）を作成してください' 
                  
                 ),
                   
@@ -81,8 +81,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   
                   // ignore: prefer_const_constructors
                   border: OutlineInputBorder(),
-                  labelText: 'パスワード（漢字・フリガナ・アルファベット）',
-                  hintText: 'パスワード（漢字・フリガナ・アルファベット）を作成してください',
+                  labelText: 'パスワード',
+                  hintText: 'パスワードを作成してください',
                   contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20)
                 ),
           

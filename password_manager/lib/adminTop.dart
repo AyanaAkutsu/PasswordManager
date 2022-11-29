@@ -74,7 +74,7 @@ class _AdminScreenState extends State<AdminScreen> {
                     elevation: 15,
                   ),
                   onPressed: (() {
-                    Navigator.of(context).pushNamed(destination[index], arguments: 'Fukaya-Takehiro');
+                    Navigator.of(context).pushNamed(destination[index], arguments: {'user': 'fukaya', 'adminCheck': 0});
                   })
                 ),
               );

@@ -135,8 +135,8 @@ class Login extends State<MyStatefulWidget> {
                           count = 1;
                         });
                       }
-                      if (collectionName == 'Fukaya-Takehiro') Navigator.of(context).pushNamed('/adminTop', arguments: collectionName);
-                      else Navigator.of(context).pushNamed('/list', arguments: collectionName);
+                      if (collectionName == 'fukaya') Navigator.of(context).pushNamed('/adminTop');
+                      else Navigator.of(context).pushNamed('/list', arguments: {'user': collectionName, 'adminCheck': 0}); //管理者がログインしている場合はadminCheckが1になる
                     },
                   )
               ),

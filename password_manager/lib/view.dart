@@ -17,13 +17,14 @@ class _ViewScreenStateState extends State<ViewScreenState> {
     final email = args['email']!; 
     final service = args['service']!;
     final password = args['password']!;
+    final adminCheck = args['adminCheck'];
 
     return Scaffold(
       appBar: AppBar(
         leading: Container(
           child: ElevatedButton(
             onPressed: () => {
-              Navigator.of(context).pushNamed('/list', arguments: userName)
+              Navigator.of(context).pushNamed('/list', arguments: {'user': userName, 'adminCheck': adminCheck})
             }, 
             child: const Text(
               "戻る"
@@ -175,7 +176,7 @@ class _ViewScreenStateState extends State<ViewScreenState> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Navigator.of(context).pushNamed('/edit',arguments: {'userName': userName, 'serviceName': service});
+          Navigator.of(context).pushNamed('/edit',arguments: {'userName': userName, 'serviceName': service, 'adminCheck': adminCheck});
         },
         child: const Text("Edit"),
       ),
