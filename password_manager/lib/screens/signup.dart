@@ -25,29 +25,30 @@ class _SignUpPageState extends State<SignUpPage> {
       appBar: AppBar(
         
         centerTitle: true,
-    iconTheme: IconThemeData(
+    iconTheme: const IconThemeData(
       color: Colors.white, //change your color here
     ),
     automaticallyImplyLeading: true,
-    title: Text('Sign Up'),
-    leading: IconButton(icon:Icon(Icons.arrow_back),
+    title: const Text('Sign Up'),
+    leading: IconButton(icon:const Icon(Icons.arrow_back),
       onPressed:() => Navigator.pop(context, false),
     )
 ),
       body :  ListView(
           children: <Widget>[
-            
-                  Container(
-                padding: const  EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: TextFormField(
+
+                 Container(
+                padding: const  EdgeInsets.fromLTRB(10, 10, 10, 0),       
+              child: 
+              TextFormField(
                 controller: cnamecontroller,
                 // ignore: prefer_const_constructors
                 decoration: InputDecoration(
                   // ignore: prefer_const_constructors
                 
-                  border: OutlineInputBorder(),
-                  labelText: '姓-名',
-                 
+                  border: const OutlineInputBorder(),
+                  labelText: '姓-名(例：Akutsu-Ayana)',
+                  hintText: 'フルネーム(できればアルファベット　例：Akutsu-Ayana)を入力してください'
                 ),
                   
               ),
@@ -61,8 +62,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 decoration: InputDecoration(
                   // ignore: prefer_const_constructors
                 
-                  border: OutlineInputBorder(),
-                  labelText: 'ユーザー名',
+                  border: const OutlineInputBorder(),
+                  labelText: 'ユーザー名（漢字・フリガナ・アルファベット）',
+                  hintText: 'ユーザー名（漢字・フリガナ・アルファベット）を作成してください' 
                  
                 ),
                   
@@ -79,8 +81,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   
                   // ignore: prefer_const_constructors
                   border: OutlineInputBorder(),
-                  hintText: 'パスワード',
-                  contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20)
+                  labelText: 'パスワード（漢字・フリガナ・アルファベット）',
+                  hintText: 'パスワード（漢字・フリガナ・アルファベット）を作成してください',
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20)
                 ),
           
             ),
