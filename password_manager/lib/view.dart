@@ -43,7 +43,7 @@ class _ViewScreenStateState extends State<ViewScreenState> {
           ),
         ),
         centerTitle: true,
-        title: const Text("View Screen"),
+        title: const Text(""),
 
         automaticallyImplyLeading: false,
         

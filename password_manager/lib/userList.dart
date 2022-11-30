@@ -39,7 +39,7 @@ class _UserListScreenState extends State<UserListScreen> {
           ),
         ),
         centerTitle: true,
-        title: const Text('User List'),
+        title: const Text('ユーザ一覧'),
 
         automaticallyImplyLeading: false,
 

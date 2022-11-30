@@ -52,12 +52,11 @@ class _ListScreenState extends State<ListScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: Visibility(
-          visible: routeLocation == 'fukaya',
-          child: Container(
+        leading: 
+           Container(
             child: ElevatedButton(
               onPressed: () => {
-                Navigator.of(context).pushNamed('/adminTop')
+                Navigator.of(context).pushNamed('/userList')
               }, 
               child: const Text(
                 "戻る"
@@ -74,12 +73,12 @@ class _ListScreenState extends State<ListScreen> {
                 )
               ),
             ),
-          ),
+          
         ),
         centerTitle: true,
-        title: const Text('Service List'),
+        title: const Text('サービス一覧'),
 
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
 
         actions: [
           ElevatedButton(

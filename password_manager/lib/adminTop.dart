@@ -25,7 +25,7 @@ class _AdminScreenState extends State<AdminScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Admin Top'),
+        title: const Text('管理者用トップ画面'),
 
         automaticallyImplyLeading: false,
 
